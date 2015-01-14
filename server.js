@@ -35,7 +35,7 @@ app.post('/articles', function(req, res, next) {
       if (error) {
           return next(error);
       } else {
-          res.send(results)
+          res.send({'totalResults': itemCount, 'results': results})
       }
     }, { columns: 'url title body image_url pubdate html'});
 });
