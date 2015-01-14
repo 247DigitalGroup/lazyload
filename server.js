@@ -3,18 +3,17 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
+var mongoosePaginate = require('mongoose-paginate');
 
 var articleSchema = new mongoose.Schema({
-    _id: Number,
     url: String,
     title: String,
     body: String,
     image_url: String,
     pubdate: Date,
     html: String,
-    link_type: String
 });
-
+articleSchema.plugin(mongoosePaginate)
 var Article = mongoose.model('links', articleSchema);
 
 mongoose.connect('localhost/lion_crawlers');
@@ -32,13 +31,13 @@ app.get('/', function(req, res) {
 });
 
 app.post('/articles', function(req, res, next) {
-    var query = Article.find(req.body);
-    query.select('url title body image_url');
-    query.limit(10);
-    query.exec(function(err, articles) {
-    if (err) return next(err);
-    res.send(articles);
-    });
+    Article.paginate(req.body.query, req.body.page, req.body.count, function(error, pageCount, results, itemCount) {
+      if (error) {
+          return next(error);
+      } else {
+          res.send(results)
+      }
+    }, { columns: 'url title body image_url pubdate html'});
 });
 
 app.get('*', function(req, res) {
