@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var mongoosePaginate = require('mongoose-paginate');
+var cors = require('cors')
 
 var articleSchema = new mongoose.Schema({
     url: String,
@@ -25,6 +26,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors())
 
 app.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });
@@ -37,7 +39,7 @@ app.post('/articles', function(req, res, next) {
       } else {
           res.send({'totalResults': itemCount, 'results': results})
       }
-    }, { columns: 'url title body image_url pubdate html'});
+    }, { columns: 'url title body image_url pubdate face_coordinates'});
 });
 
 app.get('*', function(req, res) {
