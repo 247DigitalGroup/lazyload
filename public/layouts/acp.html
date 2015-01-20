@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>ACP • ClickLion</title>
+  <link rel="shortcut icon" href="images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="components/foundation/css/normalize.css">
+  <link rel="stylesheet" href="css/foundation.min.css">
+  <link rel="stylesheet" href="components/animate.css/animate.min.css">
+  <link rel="stylesheet" href="components/fontawesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/tables.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/acp.css">
+</html>
+<body ng-app="ACP" class="grey">
+  <section class="header light fixed">
+    <div class="top-bar compress shadow">
+      <div class="row">
+        <div class="column small-3 medium-1 large-1"><a href="/" class="logo"></a></div>
+        <div class="column small-9 medium-8 large-7">
+          <ul class="menu">
+          </ul>
+        </div>
+        <div class="column small-12 medium-3 large-3">
+          <div class="row collapse">
+            <div class="column small-2"><a href="login.html" class="avatar"><img src="images/sample-avatar@2x.png" class="avatar"></a></div>
+            <div class="column small-10"><a href="dashboard.html" data-dropdown="user-dropdown" data-options="is_hover: true" class="user-info">
+                <p class="name">Thảo Đặng</p>
+                <div class="statistics"><span>$5,400.00</span><span>$69.96</span></div></a>
+              <ul id="user-dropdown" data-dropdown-content tabindex="-1" aria-hidden="true" class="dropdown">
+                <li><a>Edit my profile</a></li>
+                <li><a>Dashboard</a></li>
+                <li><a>Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="content">
+    <div class="row full-width collapse">
+      <div class="column small-12 medium-3 large-2 acp-menu">
+      </div>
+      <div class="column small-12 medium-9 large-10">
+        <div class="acp-body">
+        </div>
+      </div>
+    </div>
+  </section>
+  <script type="text/javascript" src="components/modernizr/modernizr.js"></script>
+  <script type="text/javascript" src="components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="components/foundation/js/foundation.min.js"></script>
+  <script type="text/javascript" src="components/wowjs/dist/wow.min.js"></script>
+  <script type="text/javascript" src="components/datatables/media/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="scripts/tables.js"></script>
+  <script type="text/javascript" src="components/foundation-datepicker/js/foundation-datepicker.js"></script>
+  <script type="text/javascript" src="components/jquery.inputmask/dist/jquery.inputmask.bundle.min.js"></script>
+  <script type="text/javascript" src="components/angular/angular.min.js"></script>
+  <script type="text/javascript" src="scripts/acp-controllers.js"></script>
+  <script type="text/javascript" src="scripts/app.js"></script>
+</body>

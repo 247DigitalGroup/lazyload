@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="6px" height="10px" viewBox="0 0 6 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.1 (8751) - http://www.bohemiancoding.com/sketch -->
+    <title>white-next-icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Components" sketch:type="MSArtboardGroup" transform="translate(-1020.000000, -2300.000000)" stroke="#FFFFFF">
+            <g id="testimonials" sketch:type="MSLayerGroup" transform="translate(0.000000, 1809.000000)">
+                <g id="navigations" transform="translate(416.000000, 481.000000)" sketch:type="MSShapeGroup">
+                    <g id="next" transform="translate(590.000000, -0.500000)">
+                        <path d="M14.6914799,11.2761932 L19.1712018,15.755915 L14.6714459,20.2556709" id="white-next-icon"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

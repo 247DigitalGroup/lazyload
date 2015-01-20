@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>Dashboard • ClickLion</title>
+  <link rel="shortcut icon" href="images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="components/foundation/css/normalize.css">
+  <link rel="stylesheet" href="css/foundation.min.css">
+  <link rel="stylesheet" href="components/animate.css/animate.min.css">
+  <link rel="stylesheet" href="components/fontawesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/tables.css">
+  <link rel="stylesheet" href="css/app.css">
+</html>
+<body>
+  <section class="header light">
+    <div class="top-bar">
+      <div class="row">
+        <div class="column small-3 medium-1 large-1"><a href="/" class="logo"></a></div>
+        <div class="column small-9 medium-8 large-7">
+          <ul class="menu">
+            <li><a href="/">Home</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li class="active"><a href="advertiser.html">Advertiser</a></li>
+            <li><a>Publisher</a></li>
+            <li><a>Report</a></li>
+          </ul>
+        </div>
+        <div class="column small-12 medium-3 large-3">
+          <div class="row collapse">
+            <div class="column small-2"><a href="login.html" class="avatar"><img src="images/sample-avatar@2x.png" class="avatar"></a></div>
+            <div class="column small-10"><a href="dashboard.html" data-dropdown="user-dropdown" data-options="is_hover: true" class="user-info">
+                <p class="name">Thảo Đặng</p>
+                <div class="statistics"><span>$5,400.00</span><span>$69.96</span></div></a>
+              <ul id="user-dropdown" data-dropdown-content tabindex="-1" aria-hidden="true" class="dropdown">
+                <li><a href="acp.html">Admin CP</a></li>
+                <li><a>Edit my profile</a></li>
+                <li><a>Dashboard</a></li>
+                <li><a>Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <div class="row">
+        <div class="column">
+          <ul class="navigations">
+            <li><a href="dashboard.html"><img src="images/breadcrumbs-icon.svg"></a></li>
+            <li><a href="advertiser.html">Advertiser</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="content">
+    <div class="row">
+      <div class="column">
+        <div class="row collapse">
+          <div class="column small-12 medium-3 content-menu">
+            <ul class="menu">
+              <li><a href="new-campaign.html">Create new campaign</a></li>
+              <li><a href="your-campaigns.html">Your campaigns</a>
+                <ul class="menu">
+                  <li><a>Campaign test</a></li>
+                  <li><a>Another campaign test</a></li>
+                  <li><a>test article campaign</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="column small-12 medium-9">
+            <div class="content-body">
+              <div class="row">
+                <div class="column">
+                  <ul class="small-block-grid-1 medium-block-grid-2">
+                    <li>
+                      <div class="dashboard-block">
+                        <div class="header">
+                          <h4 class="title"><span class="label info space-10">New</span>Advertising campaigns</h4><span class="counter round flash animated">12</span>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="body">
+                          <p class="small">On Air - Last 1 Hour</p>
+                          <ul class="items">
+                            <li><a href="your-campaigns.html">
+                                <p class="title">Campaign test</p><span class="label fadeIn animated warning">expired</span></a></li>
+                            <li><a href="your-campaigns.html">
+                                <p class="title">Good campaign</p><span class="label fadeIn animated">$1,678</span></a>
+                              <div class="progress round">
+                                <div style="width: 69%" class="meter fadeInLeft animated info"></div>
+                              </div>
+                            </li>
+                            <li><a href="your-campaigns.html">
+                                <p class="title">nearly finish campaign</p><span class="label fadeIn animated alert">-$89</span></a>
+                              <div class="progress round">
+                                <div style="width: 85%" class="meter fadeInLeft animated info"></div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="footer"><a href="new-campaign.html" class="button success"><span class="fa fa-plus space-5"></span>New campaign</a></div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="dashboard-block">
+                        <div class="header">
+                          <h4 class="title"><span class="label info space-10">Graph</span>Ads viewer destinations</h4><span class="counter round flash animated">1</span>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="body">
+                          <p class="small">For Active Campaigns - Last 7 Days</p>
+                          <div id="viewer-pie-chart" style="width: 100%; height: 250px"></div>
+                        </div>
+                        <div class="footer"><a href="new-campaign.html" class="button info"><span class="fa fa-pie-chart space-5"></span>View the full report</a></div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="footer">
+    <div class="row">
+      <div class="column small-11 small-centered medium-uncentered medium-3 large-4">
+        <div class="row">
+          <div class="column small-12 medium-3 hide-for-small"><a href="/"><img src="images/footer-logo.svg" width="46px"></a></div>
+          <div class="column small-12 medium-9">
+            <h3 class="brand">ClickLion</h3>
+            <h4 class="sub-brand">AdNetwork</h4>
+            <p class="copyright">Copyright © ClickLion,<br>All right reserved.</p>
+            <p class="reg-info">Reg No. 123456789JQKA</p>
+          </div>
+        </div>
+      </div>
+      <div class="column small-11 small-centered medium-uncentered medium-3 large-2">
+        <h3 class="menu-header">Our solution for</h3>
+        <ul class="menu">
+          <li><a href="#">New Advertisers</a></li>
+          <li><a href="#">Experienced Advertisers</a></li>
+          <li><a href="#">Global Advertisers</a></li>
+          <li><a href="#">Publishers</a></li>
+        </ul>
+      </div>
+      <div class="column small-11 small-centered medium-uncentered medium-3 large-2">
+        <h3 class="menu-header">Learning</h3>
+        <ul class="menu">
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Community</a></li>
+          <li><a href="#">Learn with us</a></li>
+          <li><a href="#">Ad Innovations</a></li>
+          <li><a href="#">Think Insights</a></li>
+        </ul>
+      </div>
+      <div class="column small-11 small-centered medium-uncentered medium-3 large-2">
+        <h3 class="menu-header">Site Links</h3>
+        <ul class="menu">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Why us?</a></li>
+          <li><a href="#">How it works</a></li>
+          <li><a href="#">Success Stories</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul><a href="#" class="button danger">Bugs Report</a>
+      </div>
+      <div class="column small-6 medium-12 large-2 text-right">
+        <p class="find-us-on">Find us on</p>
+        <ul class="social-menu">
+          <li><a href="#"><img src="images/small-twitter.svg"></a></li>
+          <li><a href="#"><img src="images/small-facebook.svg"></a></li>
+          <li><a href="#"><img src="images/small-google-plus.svg"></a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <script type="text/javascript" src="components/modernizr/modernizr.js"></script>
+  <script type="text/javascript" src="components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="components/foundation/js/foundation.min.js"></script>
+  <script type="text/javascript" src="components/wowjs/dist/wow.min.js"></script>
+  <script type="text/javascript" src="components/datatables/media/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="scripts/tables.js"></script>
+  <script type="text/javascript" src="components/foundation-datepicker/js/foundation-datepicker.js"></script>
+  <script type="text/javascript" src="components/jquery.inputmask/dist/jquery.inputmask.bundle.min.js"></script>
+  <script type="text/javascript" src="components/highcharts/highcharts.js"></script>
+  <script type="text/javascript" src="scripts/highcharts.theme.js"></script>
+  <script type="text/javascript" src="scripts/app.js"></script>
+  <script type="text/javascript" src="scripts/dashboard.js"></script>
+</body>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>ACP • ClickLion</title>
+  <link rel="shortcut icon" href="images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="components/foundation/css/normalize.css">
+  <link rel="stylesheet" href="css/foundation.min.css">
+  <link rel="stylesheet" href="components/animate.css/animate.min.css">
+  <link rel="stylesheet" href="components/fontawesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/tables.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/acp.css">
+</html>
+<body ng-app="ACP" class="grey">
+  <section class="header light fixed">
+    <div class="top-bar compress shadow">
+      <div class="row">
+        <div class="column small-3 medium-1 large-1"><a href="/" class="logo"></a></div>
+        <div class="column small-9 medium-8 large-7">
+          <ul class="menu">
+            <li><a href="acp.html">Admin Control Panel</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+          </ul>
+        </div>
+        <div class="column small-12 medium-3 large-3">
+          <div class="row collapse">
+            <div class="column small-2"><a href="login.html" class="avatar"><img src="images/sample-avatar@2x.png" class="avatar"></a></div>
+            <div class="column small-10"><a href="dashboard.html" data-dropdown="user-dropdown" data-options="is_hover: true" class="user-info">
+                <p class="name">Thảo Đặng</p>
+                <div class="statistics"><span>$5,400.00</span><span>$69.96</span></div></a>
+              <ul id="user-dropdown" data-dropdown-content tabindex="-1" aria-hidden="true" class="dropdown">
+                <li><a>Edit my profile</a></li>
+                <li><a>Dashboard</a></li>
+                <li><a>Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="content">
+    <div class="row full-width collapse">
+      <div class="column small-12 medium-3 large-2 acp-menu">
+        <ul class="menu">
+          <li class="title">Start</li>
+          <li class="active"><a> <i class="fa fa-newspaper-o space-10"></i>Articles Review<span class="new right">5</span></a>
+            <ul class="menu">
+              <li><a data-reveal-id="manual-query-modal" href="#"><span class="fa fa-search space-10"></span>Manual query</a></li>
+              <li><a data-reveal-id="options-query-modal" href="#"><span class="fa fa-check-square-o space-10"></span>Query with options</a></li>
+            </ul>
+          </li>
+          <li><a> <i class="fa fa-sliders space-10"></i>Crawlers Status<span class="new right">8</span></a></li>
+          <li><a> <i class="fa fa-bug space-10"></i>Reported Bugs</a></li>
+        </ul>
+      </div>
+      <div class="column small-12 medium-9 large-10">
+        <div class="acp-body">
+          <div ng-controller="ArticlesController">
+            <div class="row">
+              <div class="column">
+                <h3 ng-if="query != ''" ng-cloak>Result for query <strong>{{query}}</strong></h3>
+                <ul ng-cloak infinite-scroll="nextPage()" infinite-scroll-disabled="apiService.search.busy || apiService.search.error != 0" infinite-scroll-distance="0" infinite-scroll-immediate-check="false" class="articles small-block-grid-1 medium-block-grid-2 large-block-grid-4">
+                  <li ng-repeat="item in results" ng-class="item.isCurrent ? 'active' : ''">
+                    <div ng-click="setCurrent(item)" class="item">
+                      <div ng-style="{'background-image': 'url({{item.image_url}})'}" cl-face-image class="image">
+                        <div ng-if="item.face_coordinates" class="face">
+                          <div>{{item.face_coordinates}}</div>
+                          <div ng-bind="calcSizeRatio($event, item)"></div>
+                          <div>{{item.imageRatio}}</div>
+                        </div>
+                      </div>
+                      <h3 class="title">{{item.title}}</h3>
+                    </div>
+                  </li>
+                </ul>
+                <div ng-class="{'invisible': apiService.search.busy == false }" class="loader zoomIn animated"></div>
+                <div ng-show="apiService.search.error &gt; 0" class="alert-box secondary radius fadeIn animated">Content not found or empty data</div>
+              </div>
+            </div>
+            <div id="manual-query-modal" data-reveal class="reveal-modal medium"><a class="close-reveal-modal">&#215;</a>
+              <h3>Review by queries</h3>
+              <form ng-submit="sendQuery()">
+                <input type="text" placeholder="enter your queries here..." ng-model="query">
+                <button class="right info">Send</button>
+              </form>
+            </div>
+            <div id="options-query-modal" data-reveal class="reveal-modal small"><a class="close-reveal-modal">&#215;</a>
+              <h3>Review by queries</h3>
+              <form ng-submit="sendQuery()" class="two-columns border">
+                <div class="row">
+                  <div class="column small-4">
+                    <label for="query-domain">domain</label>
+                  </div>
+                  <div class="column small-8">
+                    <input type="text" ng-modal="query.domain">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="column small-4">
+                    <label for="query-domain">type</label>
+                  </div>
+                  <div class="column small-8">
+                    <select ng-modal="query.type">
+                      <option value="">any type</option>
+                      <option value="articles">articles</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="column small-8 small-push-4">
+                    <button class="info">Send</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div id="article-preview-modal" data-reveal class="reveal-modal full article-preview"><a class="close-reveal-modal">&#215;</a>
+              <div class="row full-width">
+                <div class="column small-12 medium-5 large-4">
+                  <div class="data">
+                    <h3 class="title">{{currentItem.title}}</h3>
+                    <p class="published">{{currentItem.pubdate}}</p><a href="{{currentItem.url}}" target="_blank">
+                      <p class="url">{{currentItem.url}}</p></a>
+                    <div class="image"><img ng-src="{{currentItem.image_url}}"></div>
+                    <p class="body">{{currentItem.body}}</p>
+                  </div>
+                </div>
+                <div class="column small-12 medium-7 large-8">
+                  <iframe ng-src="{{currentItem.trustedUrl}}" sandbox class="source"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script type="text/javascript" src="components/modernizr/modernizr.js"></script>
+  <script type="text/javascript" src="components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="components/foundation/js/foundation.min.js"></script>
+  <script type="text/javascript" src="components/wowjs/dist/wow.min.js"></script>
+  <script type="text/javascript" src="components/datatables/media/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="scripts/tables.js"></script>
+  <script type="text/javascript" src="components/foundation-datepicker/js/foundation-datepicker.js"></script>
+  <script type="text/javascript" src="components/jquery.inputmask/dist/jquery.inputmask.bundle.min.js"></script>
+  <script type="text/javascript" src="components/angular/angular.min.js"></script>
+  <script type="text/javascript" src="scripts/acp-controllers.js"></script>
+  <script type="text/javascript" src="components/ngInfiniteScroll/build/ng-infinite-scroll.min.js"></script>
+  <script type="text/javascript" src="scripts/app.js"></script>
+</body>
