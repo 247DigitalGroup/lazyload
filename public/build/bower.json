@@ -1,0 +1,27 @@
+{
+  "name": "magz",
+  "version": "0.0.0",
+  "authors": [
+    "Gia <gia@coa.vn>"
+  ],
+  "description": "xuxu",
+  "keywords": [],
+  "license": "MIT",
+  "homepage": "http://coa.vn",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "foundation": "~5.5.0",
+    "jquery": "*",
+    "animate.css": "*",
+    "wowjs": "*",
+    "fontawesome": "*",
+    "angular": "~1.3.8",
+    "ngInfiniteScroll": "~1.2.0"
+  }
+}

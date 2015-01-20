@@ -113,11 +113,17 @@ ACP.controller 'ArticlesController', ($scope, APIService, $http, $sce) ->
 	$scope.sendQuery()
 	null
 
-ACP.directive 'clFaceImage', () ->
+ACP.directive 'clFaceImage', ($window) ->
 	{
 		link: (scope, e, attr) ->
-			e.attr 'data-width', e.width()
-			e.attr 'data-height', e.height()
+			console.log scope.item
+			scope.onResize = () ->
+			  e.attr 'data-width', e.width()
+			  e.attr 'data-height', e.height()
+			scope.onResize()
+			angular.element($window).bind 'resize', () ->
+			  scope.onResize()
+			  scope.$apply()
 			null
 	}
 

@@ -1,0 +1,14 @@
+{
+  "name": "parallax.js",
+  "homepage": "https://github.com/pixelcog/parallax.js",
+  "version": "1.2.1",
+  "_release": "1.2.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.2.1",
+    "commit": "601068c9acae7f0fac51c83d96dee79fcb05126c"
+  },
+  "_source": "https://github.com/pixelcog/parallax.js.git",
+  "_target": "~1.2.1",
+  "_originalSource": "https://github.com/pixelcog/parallax.js.git"
+}

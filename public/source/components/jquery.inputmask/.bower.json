@@ -1,0 +1,52 @@
+{
+  "name": "jquery.inputmask",
+  "version": "3.1.53",
+  "main": [
+    "./dist/inputmask/jquery.inputmask.js",
+    "./dist/inputmask/jquery.inputmask.extensions.js",
+    "./dist/inputmask/jquery.inputmask.date.extensions.js",
+    "./dist/inputmask/jquery.inputmask.numeric.extensions.js",
+    "./dist/inputmask/jquery.inputmask.phone.extensions.js",
+    "./dist/inputmask/jquery.inputmask.regex.extensions.js"
+  ],
+  "keywords": [
+    "jQuery",
+    "plugins",
+    "input",
+    "form",
+    "inputmask",
+    "mask"
+  ],
+  "description": "jquery.inputmask is a jquery plugin which create an input mask.",
+  "license": "http://opensource.org/licenses/mit-license.php",
+  "ignore": [
+    "**/.*",
+    "qunit/",
+    "nuget/",
+    "tools/",
+    "js/",
+    "*.md",
+    "build.properties",
+    "build.xml",
+    "jquery.inputmask.jquery.json"
+  ],
+  "dependencies": {
+    "jquery": ">=1.7"
+  },
+  "authors": [
+    {
+      "name": "Robin Herbots"
+    }
+  ],
+  "homepage": "http://robinherbots.github.io/jquery.inputmask",
+  "_release": "3.1.53",
+  "_resolution": {
+    "type": "version",
+    "tag": "3.1.53",
+    "commit": "d4369b71de337e96ea6c73dd6fc71a2ec9db1102"
+  },
+  "_source": "https://github.com/RobinHerbots/jquery.inputmask.git",
+  "_target": "~3.1.53",
+  "_originalSource": "https://github.com/RobinHerbots/jquery.inputmask.git",
+  "_direct": true
+}
