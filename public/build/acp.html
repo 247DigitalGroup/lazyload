@@ -67,10 +67,8 @@
                   <li ng-repeat="item in results" ng-class="item.isCurrent ? 'active' : ''">
                     <div ng-click="setCurrent(item)" class="item">
                       <div ng-style="{'background-image': 'url({{item.image_url}})'}" cl-face-image class="image">
-                        <div ng-if="item.face_coordinates" class="face">
-                          <div>{{item.face_coordinates}}</div>
-                          <div ng-bind="calcSizeRatio($event, item)"></div>
-                          <div>{{item.imageRatio}}</div>
+                        <div ng-if="item.face_coordinates" ng-style="{'top': item.scale.y, 'left': item.scale.x, 'bottom': item.scale.y, 'right': item.scale.x}" class="range">
+                          <div ng-style="{'left': item.scale.face.x, 'top': item.scale.face.y, 'width': item.scale.face.w, 'height': item.scale.face.h}" class="face"></div>
                         </div>
                       </div>
                       <h3 class="title">{{item.title}}</h3>

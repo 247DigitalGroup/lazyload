@@ -125,20 +125,53 @@
       $(previewModal).foundation('reveal', 'open');
       return null;
     };
-    $scope.calcSizeRatio = function($event, item) {
-      return null;
-    };
     $scope.sendQuery();
     return null;
   });
 
   ACP.directive('clFaceImage', function($window) {
     return {
-      link: function(scope, e, attr) {
-        console.log(scope.item);
+      link: function(scope, e, attrs) {
+        scope.faceDetect = function() {
+          var img;
+          if (scope.item.face_coordinates) {
+            img = new Image();
+            img.src = scope.item.image_url;
+            img.onload = function() {
+              var imageWoh, itemWoh, scale;
+              imageWoh = img.width / img.height;
+              itemWoh = scope.item_width / scope.item_height;
+              scale = {};
+              if (imageWoh > itemWoh) {
+                scale.by = 'w';
+                scale.r = scope.item_width / img.width;
+                scale.w = scope.item_width;
+                scale.h = scope.item_width / img.width * img.height;
+                scale.x = 0;
+                scale.y = (scope.item_height - scale.h) / 2;
+              } else {
+                scale.by = 'h';
+                scale.w = scope.item_height / img.height * img.width;
+                scale.r = scope.item_height / img.height;
+                scale.h = scope.item_height;
+                scale.x = (scope.item_width - scale.w) / 2;
+                scale.y = 0;
+              }
+              scale.face = {
+                x: "" + (scope.item.face_coordinates.x * scale.r / scale.w * 100) + "%",
+                y: "" + (scope.item.face_coordinates.y * scale.r / scale.h * 100) + "%",
+                w: "" + (scope.item.face_coordinates.w * scale.r / scale.w * 100) + "%",
+                h: "" + (scope.item.face_coordinates.h * scale.r / scale.h * 100) + "%"
+              };
+              return scope.item.scale = scale;
+            };
+            return null;
+          }
+        };
         scope.onResize = function() {
-          e.attr('data-width', e.width());
-          return e.attr('data-height', e.height());
+          scope.item_width = e.width();
+          scope.item_height = e.height();
+          return scope.faceDetect();
         };
         scope.onResize();
         angular.element($window).bind('resize', function() {

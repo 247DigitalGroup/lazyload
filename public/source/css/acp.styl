@@ -92,10 +92,25 @@ ul.articles
 			div.image
 				margin -15px -15px 10px -15px
 				height 200px
-				background-color lighten(backgroundColor, 50)
+				background-color darken(white, 10)
 				background-size contain
 				background-position center
 				background-repeat no-repeat
+				position relative
+				div.range
+					position absolute
+					background-color rgba(black, .15)
+					defaultTransition()
+					&:hover
+						background-color rgba(black, .4)
+						> div.face
+							border-color rgba(white, .7)
+					> div.face
+						position absolute
+						background-color rgba(white, .2)
+						border 1px solid rgba(white, .5)
+						border-radius defaultRadius
+					
 			p
 				word-break break-word
 			p.url
@@ -126,6 +141,7 @@ div.article-preview
 		margin 0
 	div.image
 		margin-bottom 20px
+			
 	iframe.source
 		margin-top 10px
 		width 100%

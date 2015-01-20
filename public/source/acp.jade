@@ -48,10 +48,8 @@ block content-body
           li(ng-repeat="item in results", ng-class="item.isCurrent ? 'active' : ''")
             .item(ng-click="setCurrent(item)")
               .image(ng-style="{'background-image': 'url({{item.image_url}})'}", cl-face-image)
-                .face(ng-if="item.face_coordinates")
-                  div {{item.face_coordinates}}
-                  div(ng-bind="calcSizeRatio($event, item)")
-                  div {{item.imageRatio}}
+                .range(ng-if="item.face_coordinates", ng-style="{'top': item.scale.y, 'left': item.scale.x, 'bottom': item.scale.y, 'right': item.scale.x}")
+                  .face(ng-style="{'left': item.scale.face.x, 'top': item.scale.face.y, 'width': item.scale.face.w, 'height': item.scale.face.h}")
               h3.title {{item.title}}
               //- p.body
                 span {{ item.body.substr(0, 60) }}
