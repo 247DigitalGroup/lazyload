@@ -1,0 +1,51 @@
+@keyframes spin
+	100%
+		transform rotate(360deg)
+		
+.in-progress
+	stripeColor = rgba(white, .2)
+	text-shadow none
+	background linear-gradient(-45deg, stripeColor 25%, transparent 25%, transparent 50%, stripeColor 50%, stripeColor 50%, stripeColor 75%, transparent 75%, transparent)
+	background-repeat repeat
+	background-size 40px 40px, 100% 100%
+	animation progress-bar-stripes 2s linear infinite
+
+@keyframes progress-bar-stripes
+	from
+		background-position 0 0
+	to
+		background-position 40px 0
+		
+.loader
+	r = 10px
+	d = r * 2
+	t = 2000ms
+	foreColor = darken(white, 15)
+	width d
+	height d
+	border: (d/10) solid foreColor
+	border-radius d
+	position relative
+	left 50%
+	margin-left: -(d/2)
+	margin-top 15px
+	margin-bottom 25px
+	box-sizing content-box
+	&:before, &:after
+		content ''
+		position absolute
+		display block
+		width: (d/10)
+		background-color foreColor
+		border-radius: (d/20)
+		transform-origin 50% 0
+	&:before
+		height: (r - d/5)
+		left: (r - d/20)
+		top 50%
+		animation: spin t linear infinite
+	&:after
+		height: (r - d/10)
+		left: (r - d/20)
+		top 50%
+		animation spin (t/4) linear infinite

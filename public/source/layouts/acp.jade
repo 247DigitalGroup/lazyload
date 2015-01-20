@@ -1,0 +1,61 @@
+doctype
+html
+  meta(charset='utf-8')
+  meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
+  meta(name='apple-mobile-web-app-capable', content='yes')
+  meta(name='apple-mobile-web-app-status-bar-style', content='black')
+  title ACP • ClickLion
+  link(rel="shortcut icon", href="images/favicon.png", type="image/png")
+  link(rel="stylesheet", href="components/foundation/css/normalize.css")
+  link(rel="stylesheet", href="css/foundation.min.css")
+  link(rel="stylesheet", href="components/animate.css/animate.min.css")
+  link(rel="stylesheet", href="components/fontawesome/css/font-awesome.min.css")
+  link(rel="stylesheet", href="css/app.css")
+  link(rel="stylesheet", href="css/acp.css")
+  block css
+
+body.grey(ng-app="ACP")
+
+  section.header.light.fixed
+    .top-bar.compress.shadow
+      .row
+        .column.small-3.medium-1.large-1
+          a.logo(href="/")
+        .column.small-9.medium-8.large-7
+          ul.menu
+            block top-bar-menu
+        .column.small-12.medium-3.large-3
+          .row.collapse
+            .column.small-2
+              a.avatar(href="login.html")
+                img.avatar(src="images/sample-avatar@2x.png")
+            .column.small-10
+              a.user-info(href="dashboard.html", data-dropdown="user-dropdown", data-options="is_hover: true")
+                p.name Thảo Đặng
+                .statistics
+                  span $5,400.00
+                  span $69.96
+              ul#user-dropdown.dropdown(data-dropdown-content, tabindex="-1", aria-hidden="true")
+                li
+                  a Edit my profile
+                li
+                  a Dashboard
+                li
+                  a Logout
+
+  section.content
+    .row.full-width.collapse
+      .column.small-12.medium-3.large-2.acp-menu
+        block content-menu
+      .column.small-12.medium-9.large-10
+        .acp-body
+          block content-body
+
+  script(type="text/javascript", src="components/modernizr/modernizr.js")
+  script(type="text/javascript", src="components/jquery/dist/jquery.min.js")
+  script(type="text/javascript", src="components/foundation/js/foundation.min.js")
+  script(type="text/javascript", src="components/wowjs/dist/wow.min.js")
+  script(type="text/javascript", src="components/angular/angular.min.js")
+  script(type="text/javascript", src="scripts/acp-controllers.js")
+  block script
+  script(type="text/javascript", src="scripts/app.js")

@@ -1,0 +1,66 @@
+@import nib
+
+defaultFontFamily = 'Avenir Next'
+defaultFontSize = 14px
+defaultRadius = 2px
+
+lightFontWeight = 100
+regularFontWeight = 400
+demiBoldFontWeight = 500
+mediumBoldFontWeight = 600
+boldFontWeight = 700
+heavyFontWeight = 900
+
+blackTextColor = black
+darkTextColor = #5c5c5c
+greyTextColor = #4a4a4a
+smokeTextColor = #979797
+lightSmokeTextColor = #bbb
+
+activeColor = #3cb
+secondaryColor = #ddd
+disabledColor = #444
+infoColor = #4a90e2
+successColor = #7ed321
+dangerColor = #f31a40
+warningColor = #f5a623
+
+noteColor = #fc7
+facebookColor = #3b5998
+twitterColor = #00aced
+googleColor = #dd4b39
+pinterestColor = #cb2027
+youtubeColor = #e22
+bodyColor = darken(white, 1)
+
+small-range-lower = 0em
+small-range-upper = 40em
+medium-range-lower = 40.063em
+medium-range-upper = 64em
+large-range-lower = 64.063em
+large-range-upper = 90em
+xlarge-range-lower = 90.063em
+xlarge-range-upper = 120em
+xxlarge-range-lower = 120.063emz
+xxlarge-range-upper = 99999999em
+
+only-screen = 'only screen'
+landscape = only-screen + ' and (orientation: landscape)'
+portrait = only-screen + ' and (orientation: portrait)'
+small-up = only-screen
+small-only = only-screen + ' and (max-width: ' + small-range-upper + ')'
+medium-up = only-screen + ' and (min-width: ' + medium-range-lower + ')'
+medium-only = only-screen + ' and (min-width: ' + medium-range-lower + ') and (max-width: ' + medium-range-upper + ')'
+large-up = only-screen + ' and (min-width: ' + large-range-lower + ')'
+large-only = only-screen + ' and (min-width: ' + large-range-lower + ') and (max-width: ' + large-range-upper + ')'
+xlarge-up = only-screen + ' and (min-width: ' + xlarge-range-lower + ')'
+xlarge-only = only-screen + ' and (min-width: ' + xlarge-range-lower + ') and (max-width: ' + xlarge-range-upper + ')'
+xxlarge-up = only-screen + ' and (min-width: ' + xxlarge-range-lower + ')'
+xxlarge-only = only-screen + ' and (min-width: ' + xxlarge-range-lower + ') and (max-width: ' + xxlarge-range-upper + ')'
+
+small = medium-up
+medium = medium-up
+large = large-up
+
+defaultTransition()
+  transition all .2s ease-in-out

@@ -1,0 +1,136 @@
+@import 'configs'
+
+backgroundColor = #393341
+activeColor = #1aae88
+
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak
+	display none !important
+	
+.invisible
+	visibility hidden
+	
+body.modal-open
+	overflow hidden
+
+div.scrollable
+	height 600px
+	overflow scroll
+	
+div.reveal-modal-bg
+	position fixed
+
+div.acp-menu
+	background linear-gradient(top, backgroundColor, lighten(backgroundColor, 10))
+	@media medium-up
+		position fixed
+		top 64px
+		bottom 0
+		left 0
+	> ul.menu
+		margin 30px 0
+		padding 0
+		list-style none
+		> li
+			&.title
+				font-size 13px
+				color lighten(backgroundColor, 30)
+				padding 0 20px 5px 20px
+			&.active
+				> a
+					background-color activeColor
+					color white
+					&:hover
+						background-color darken(activeColor, 5)
+			> a
+				defaultTransition()
+				display block
+				padding 8px 20px
+				color lighten(backgroundColor, 60)
+				&:hover
+					background-color darken(backgroundColor, 5)
+					color white
+			span.new
+				margin-top 2px
+				display block
+				color white
+				font-size 10px
+				padding 0 5px
+				line-height 18px
+				background-color dangerColor
+				border-radius defaultRadius
+			ul.menu
+				list-style none
+				margin 10px 0 10px 45px
+				padding 0
+				> li
+					> a
+						font-size 13px
+						color lighten(backgroundColor, 50)
+						&:hover
+							color white
+
+div.acp-body
+	margin-top 90px
+	padding-left 20px
+	padding-right 20px
+	
+ul.articles
+	margin-top 20px
+	li
+		div.item
+			cursor pointer
+			background-color white
+			border-radius defaultRadius
+			padding 15px 15px 10px 15px
+			overflow hidden
+			border 1px solid #eaeaea
+			div.image
+				margin -15px -15px 10px -15px
+				height 200px
+				background-color lighten(backgroundColor, 50)
+				background-size contain
+				background-position center
+				background-repeat no-repeat
+			p
+				word-break break-word
+			p.url
+				font-size 12px
+				margin 0 0 10px 0
+			h3.title
+				font-size 14px
+				font-weight regularFontWeight
+				margin-bottom 0px
+			p.body
+				color grey
+				font-size 14px
+				max-height 310px
+				overflow hidden
+				text-overflow ellipse
+				margin 0
+				
+div.article-preview
+	height = 860px
+	div.data
+		overflow-y scroll
+		height height
+	p.url
+		font-size 12px
+		color infoColor
+	p.published
+		font-size 12px
+		margin 0
+	div.image
+		margin-bottom 20px
+	iframe.source
+		margin-top 10px
+		width 100%
+		height height
+		border none
+		img
+			max-width 100%
+			

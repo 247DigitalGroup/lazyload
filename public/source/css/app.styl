@@ -1,0 +1,827 @@
+@import 'configs'
+@import 'animations'
+  
+body
+  background-color bodyColor
+  &.grey
+    background-color #f5f5f5
+  
+h1, h2, h3, h4
+  font-weight lightFontWeight
+  strong
+    font-weight demiBoldFontWeight
+h5, h6
+  strong
+    font-weight demiBoldFontWeight
+    
+a
+  color activeColor
+
+table
+  darkBorderColor = #ddd
+  lightBorderColor = #eee
+  width 100%
+  border 1px solid darkBorderColor
+  border-collapse separate
+  border-radius defaultRadius
+  margin-bottom 20px
+  margin-top 5px
+  th, td
+    &:not(:last-child)
+      border-right 1px solid lightBorderColor
+  > thead
+    background-color #f8f8f8
+    > tr
+      > th
+        padding 8px 10px 6px 10px
+        border-bottom 1px solid lighten(darkBorderColor, 5)
+      > th
+        font-size 13px
+        font-weight demiBoldFontWeight
+        color greyTextColor
+        text-align left
+  > tbody
+    > tr
+      &:first-child
+        > td
+          padding 7px 10px 4px 10px
+      &:not(:last-child)
+        > td
+          border-bottom 1px solid lightBorderColor
+      > td
+        padding 4px 10px
+
+.row
+  &.full-width
+    max-width none
+    .row
+      max-width none
+
+button,
+input[type="submit"],
+button[type="submit"],
+a.button,
+button.button,
+input[type="submit"].button,
+button[type="submit"].button
+  background-color activeColor
+  padding 5px 15px
+  font-size 13px
+  color white
+  border-radius defaultRadius
+  outline none
+  &:not(.border)
+    text-shadow 0 -1px 1px rgba(black, .1)
+  &:hover,
+  &:focus
+    background-color darken(activeColor, 7)
+  &.success
+    background-color successColor
+    color white
+    position relative
+    &:hover,
+    &:focus
+      background-color darken(successColor, 7)
+  &.danger
+    background-color dangerColor
+    color white
+    position relative
+    &:hover,
+    &:focus
+      background-color darken(dangerColor, 7)
+  &.info
+    background-color infoColor
+    color white
+    position relative
+    &:hover,
+    &:focus
+      background-color darken(infoColor, 7)
+  &.warning
+    background-color warningColor
+    color white
+    position relative
+    &:hover,
+    &:focus
+      background-color darken(warningColor, 7)
+  &.border
+    border 2px solid greyTextColor
+    color greyTextColor
+    font-weight demiBoldFontWeight
+    font-size 10px
+    letter-spacing 2px
+    text-transform uppercase
+    background-color transparent
+    border-radius 2px
+    padding 8px 12px 8px 14px
+    text-align center
+    &.white
+      color white
+      border-color white
+
+input,
+select,
+input[type="text"],
+input[type="search"],
+input[type="number"]
+input[type="password"],
+input[type="email"],
+textarea
+  border-radius defaultRadius
+  font-size 13px
+  font-weight demiBoldFontWeight
+  &:focus
+    box-shadow none
+
+.border
+  input,
+  select,
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  textarea
+    font-weight demiBoldFontWeight
+    border none
+    border-radius 0
+    padding 0
+    background-color transparent
+    border-bottom 1px solid darken(white, 10)
+    &:focus
+      border-bottom-color activeColor
+      background-color transparent
+      box-shadow none
+  span.postfix, span.prefix
+    border none
+    border-radius 0
+    border-bottom 1px solid darken(white, 10)
+    background-color transparent
+    font-weight demiBoldFontWeight
+    font-size 13px
+    &.postfix
+      padding-right 0
+      text-align right
+    &.prefix
+      padding-left 0
+      text-align left
+
+ul.dropdown
+  backgroundColor = #111
+  markerSize = 8px
+  position absolute
+  left -9999px
+  width 135px
+  margin 0
+  padding 20px
+  list-style none
+  background-color backgroundColor
+  outline none
+  z-index 1
+  border-radius defaultRadius
+  margin-top 10px
+  cursor pointer
+  &:before
+    content ''
+    position absolute
+    border 10px solid transparent
+    border-bottom-color backgroundColor
+    top: -(markerSize * 2)
+    left 10px
+  > li
+    > a
+      display block
+      color smokeTextColor
+      font-size 13px
+      line-height 20px
+      defaultTransition()
+      &:hover
+        line-height 20px
+        color white
+        font-size 14px
+
+.space-5
+  margin-right 5px
+.space-10
+  margin-right 10px
+.left-space-5
+  margin-left 5px
+.left-space-10
+  margin-left 10px
+
+form
+  &.two-columns
+    label
+      &:not(.image-picker)
+        font-size 13px
+        text-align right
+        margin-top 7px
+  
+label.image-picker
+  border-radius defaultRadius
+  text-transform uppercase
+  background-repeat no-repeat
+  background-size cover
+  background-position center
+  width 150px
+  height @width
+  margin-bottom 20px
+  position relative
+  &:hover
+    &:before, &:after
+      opacity 1
+  &:before, &:after
+    defaultTransition()
+    border-radius defaultRadius
+    content ''
+    top 0
+    bottom 0
+    right 0
+    left 0
+    position absolute
+    opacity 0
+  &:before
+    z-index 1
+    background linear-gradient(top, rgba(103, 95, 113, .7), rgba(104, 95, 113, .4))
+  &:after
+    z-index 2
+    background-image url(../images/image-upload-overlay.svg)
+    background-repeat no-repeat
+    background-position center
+    
+div.hero
+  position relative
+  background #3a3442 url(../images/slides/0.jpg) no-repeat center
+  background-size cover
+  img.bg
+    position absolute
+    height 100%
+  div.container
+    padding 300px 0
+    div.slogan
+      background-color black
+      border-radius defaultRadius
+      margin-bottom 20px
+      padding 20px
+      position relative
+      overflow hidden
+      div.overlay
+        size = 248px
+        background-position center
+        background-size contain
+        background-repeat no-repeat
+        width size
+        height size
+        position absolute
+        bottom (- size / 3)
+        right (- size / 4)
+        opacity .25
+        &.spin
+          animation spin 8s linear infinite
+      h1
+        font-size 20px
+        line-height 25px
+        font-weight lightFontWeight
+        color darken(white, 20)
+        margin 0
+        strong
+          font-weight lightFontWeight
+          color white
+      &.big
+        padding 35px
+        h1
+          font-size 30px
+          line-height 30px
+
+ul.social-connects
+  list-style none
+  margin 0
+  padding 0
+  > li
+    margin-bottom 10px
+    > a
+      color white
+      line-height 30px
+      height 30px
+      display inline-block
+      padding 0 6px
+      border-radius 2px
+      font-size 12px
+      width 50%
+      > img
+        margin-right 10px
+      &.facebook
+        background-color facebookColor
+      &.google-plus
+        background-color googleColor
+
+div.code
+  background-repeat no-repeat
+  background-size cover
+  background-position center
+  position relative
+  color white
+  &.code-404
+    background-image url(../images/code-404-1.jpg)
+  h1, h2, h3, h4, h5, h6, p
+    color white
+  div.container
+    background-image -o-linear-gradient(-89deg, rgba(black, .6) 60%, rgba(black, .1) 99%)
+    background-image -moz-linear-gradient(-89deg, rgba(black, .6) 60%, rgba(black, .1) 99%)
+    background-image -ms-linear-gradient(-89deg, rgba(black, .6) 60%, rgba(black, .1) 99%)
+    background-image linear-gradient(-179deg, rgba(black, .6) 60%, rgba(black, .1) 99%)
+    padding 80px 40px
+    min-height 500px
+    @media large-up
+      padding 130px 50px
+      min-height 640px
+    div.logo
+      text-align center
+      margin-bottom 45px
+
+div.testimonial
+  
+  h1.title
+    color white
+    text-align center
+    
+  ul.reviews
+    list-style none
+    padding-top 10px
+    > li
+      > div.body
+        background white
+        border-radius defaultRadius
+        padding 25px
+        text-align center
+        div.avatar
+          display inline-block
+          border-radius 40px
+          background-repeat no-repeat
+          background-size cover
+          background-position center
+          width 80px
+          height 80px
+          margin-bottom 15px
+        p
+          text-align left
+          font-size 14px
+          color lighten(black, 50)
+        p.author
+          color black
+          font-weight demiBoldFontWeight
+          letter-spacing 2px
+          font-size 14px
+          text-transform uppercase
+          margin 0
+          text-align right
+        p.from
+          color black
+          font-size 13px
+          margin 0
+          text-align right
+    
+section.content
+  div.full-content
+    padding-top 45px
+    padding-bottom 30px
+    &.grey
+      background-color #efefef
+  &.form
+    background-image url(../images/form-background.jpg)
+    background-repeat no-repeat
+    background-size cover
+    background-position center
+    div.container
+      padding 130px 50px
+      background-image -o-linear-gradient(-89deg, white 60%, rgba(white, .8) 99%)
+      background-image -moz-linear-gradient(-89deg, white 60%, rgba(white, .8) 99%)
+      background-image -ms-linear-gradient(-89deg, white 60%, rgba(white, .8) 99%)
+      background-image linear-gradient(-179deg, white 60%, rgba(white, .8) 99%)
+      min-height 640px
+      @media small-only
+        min-height 0
+        padding 50px 30px
+        background-image -o-linear-gradient(-89deg, white 33%, rgba(white, .8) 99%)
+        background-image -moz-linear-gradient(-89deg, white 33%, rgba(white, .8) 99%)
+        background-image -ms-linear-gradient(-89deg, white 33%, rgba(white, .8) 99%)
+        background-image linear-gradient(-179deg, white 33%, rgba(white, .8) 99%)
+      a.link
+        display block
+        font-size 13px
+        text-decoration underline
+        color darkTextColor
+        margin-bottom 15px
+      div.logo
+        text-align center
+        margin-bottom 50px
+      h3.title
+        color blackTextColor
+        font-size 15px
+        font-weight demiBoldFontWeight
+        margin 0 0 25px 0
+      input
+        font-size 14px
+        letter-spacing 1px
+
+section.footer
+  background-color darken(white, 2)
+  padding 50px 0 100px 0
+  
+  p.copyright, p.reg-info
+    font-size 12px
+    
+  h3.menu-header
+    color blackTextColor
+    font-weight demiBoldFontWeight
+    letter-spacing 2px
+    font-size 12px
+    text-transform uppercase
+    margin 10px 0 15px 0
+    
+  p.find-us-on
+    color darkTextColor
+    font-size 13px
+    margin 10px 0 10px 0
+    
+  ul.social-menu
+    list-style none
+    font-size 0
+    > li
+      display inline-block
+      &:not(:last-child)
+        margin-right 10px
+  
+  ul.menu
+    margin 0 0 20px 13px
+    font-size 13px
+    list-style-image url(../images/footer-menu-bullet.svg)
+    > li
+      margin-bottom 3px
+      > a
+        padding-left 3px
+        color greyTextColor
+        &:hover, &:focus
+          color activeColor
+
+  h3.brand, h4.sub-brand
+    text-transform uppercase
+    letter-spacing 4px
+    margin 0
+    &.brand
+      margin-top 10px
+      font-size 12px
+      color darkTextColor
+      font-weight demiBoldFontWeight
+    &.sub-brand
+      margin-bottom 20px
+      color lightSmokeTextColor
+      letter-spacing 3px
+      font-size 11px
+
+section.header
+  background-color #3a3442
+  
+  &.fixed
+    position fixed
+    width 100%
+    background-color transparent
+    z-index 1000
+    &:before
+      pointer-events none
+      z-index -1
+      content ''
+      width 100%
+      height 128px
+      display block
+      position absolute
+      top 0
+      left 0
+      right 0
+      background linear-gradient(top, rgba(black, .4), transparent)
+
+  &.light
+    &:before
+      display none
+    div.top-bar
+      background-color white
+      a.logo
+        background-image url(../images/top-logo-color.svg)
+      ul.menu
+        > li
+          &.active
+            > a
+              color black
+          > a
+            color lighten(black, 30)
+            &:hover
+              color black
+      a.user-info
+        p.name
+          color greyTextColor
+        div.statistics
+          color smokeTextColor
+          
+  div.top-bar
+    padding 20px 0
+    defaultTransition()
+    
+    &.compress
+      padding 5px 0
+      a.logo
+        max-width 32px
+        height 54px
+      ul.menu
+        margin-top 17px
+    
+    &.shadow
+      border-bottom 1px solid #eee
+
+    div.guest-menu
+      text-align right
+      margin-top 13px
+      a.button
+        margin-bottom 0
+    
+    a.logo
+      display block
+      width 100%
+      height 50px
+      background-position left center
+      background-size contain
+      background-image url(../images/top-logo.svg)
+      background-repeat no-repeat
+      
+    ul.menu
+      list-style none
+      margin 15px 0 0 0
+      padding 0
+      > li
+        margin-bottom 10px
+        display inline-block
+        &:not(:last-child)
+          margin-right 35px
+        &.active
+          > a
+            color white
+            border-bottom 3px solid activeColor
+        > a
+          defaultTransition()
+          padding 1px 0
+          display block
+          color darken(white, 10)
+          font-size 11px
+          font-weight mediumBoldFontWeight
+          text-transform uppercase
+          letter-spacing 1.85px
+          &:hover
+            color white
+    a.avatar
+      line-height 54px
+      img.avatar
+        width 100%
+        max-width 54px
+    a.user-info
+      display block
+      padding-left 15px
+      p.name
+        color activeColor
+        font-weight demiBoldFontWeight
+        margin 7px 0 0 0
+      div.statistics
+        color white
+        font-size 12px
+        > span
+          &:not(:last-child)
+            margin-right 10px
+    
+  div.breadcrumbs
+    background-color #393341
+    ul.navigations
+      margin 0
+      padding 2px 0 0 0
+      list-style none
+      > li
+        display inline-block
+        line-height 40px
+        &:last-child, &.active
+          > a
+            color white
+        &:not(:first-child)
+          &:before
+            content '•'
+            padding 0 10px 0 8px
+            display inline-block
+            color darkTextColor
+            line-height 40px
+        > a
+          color lightSmokeTextColor
+        
+    
+section.content
+  
+  div.intro-block
+    background-size cover
+    background-position center
+    background-repeat no-repeat
+    position relative
+    div.container
+      padding 50px 0
+      @media large-up
+        padding 100px 0
+      @media medium-up
+        padding 70px 0
+    h1.title
+      font-size 20px
+      line-height 30px
+      font-weight lightFontWeight
+      margin 35px 0 20px 0
+      @media medium-up
+        font-size 25px
+        line-height 32px
+      @media large-up
+        font-size 30px
+        line-height 40px
+      strong
+        font-weight regularFontWeight
+    a.title-link
+      color activeColor
+      
+  div.content-menu
+    background linear-gradient(top, rgba(#eee, 100), rgba(#eee, 0))
+    padding-top 35px
+    padding-bottom 50px
+    @media medium-up
+      min-height 500px
+    &.fixed
+      position fixed
+      top 0
+    > ul.menu
+      margin 0
+      padding 0
+      list-style none
+      > li
+        margin 0
+        padding 0 0 0 25px
+        &.active
+          > a
+            background-color infoColor
+            color white
+        > a
+          display block
+          color greyTextColor
+          margin 0 0 0 -25px
+          padding 8px 25px
+        ul.menu
+          margin 0
+          padding 0
+          list-style none
+          > li
+            &.active
+              background-color white
+            > a
+              display block
+              background-image url(../images/footer-menu-bullet.svg)
+              background-repeat no-repeat
+              background-position center left 15px
+              color greyTextColor
+              padding 7px 20px 7px 28px
+              font-size 13px
+      
+  div.content-body
+    @media medium-up
+      margin-right -15px
+      padding 35px 0 50px 20px
+    div.header
+      margin-bottom 30px
+      h1
+        margin 0
+        font-size 36px
+        font-weight lightFontWeight
+        line-height 50px
+
+  ul.wizard
+    margin 0
+    padding 0
+    list-style none
+    > li
+      h5.title
+        margin-left 35px
+        margin-bottom 30px
+        padding-bottom 2px
+        border-bottom 1px dotted darken(white, 15)
+        font-size 15px
+        font-weight demiBoldFontWeight
+        span.step
+          margin-left -35px
+          display inline-block
+          background-color activeColor
+          border-radius 1000px
+          height 24px
+          width 24px
+          color white
+          line-height 24px
+          text-align center
+          margin-right 10px
+      &:after
+        defaultTransition()
+        z-index 2
+        content ''
+        position absolute
+        top 0
+        bottom 0
+        left 0
+        right 0
+        pointer-events none
+        background-color transparent
+    > li.over,
+    > li.disabled
+      .next-step
+        display none
+    > li.over
+      .next-step
+        display none
+      h5.title
+        span.step
+          background-color successColor
+    > li.disabled
+      position relative
+      pointer-events none
+      h5.title
+        span.step
+          background-color disabledColor
+      &:after
+        background-color rgba(white, .6)
+        
+  div.dashboard-block
+    borderColor = darken(white, 10)
+    border-radius defaultRadius
+    background-color white
+    border 1px solid borderColor
+    > div.header
+      border-bottom 1px solid lighten(borderColor, 5)
+      padding 10px
+      margin-bottom 0
+      &:before, &:after
+        content ''
+        display table
+      &:after
+        clear both
+      h4.title
+        font-weight demiBoldFontWeight
+        font-size 14px
+        float left
+        margin 0
+        span.label
+          border-radius defaultRadius
+      span.counter
+        float right
+        color white
+        font-size 10px
+        background-color dangerColor
+        padding 0 7px
+        line-height 20px
+        border-radius 1000px
+    > div.body
+      padding 10px 15px
+      p.small
+        font-size 11px
+        text-transform uppercase
+        font-weight demiBoldFontWeight
+        letter-spacing 1px
+        color lighten(greyTextColor, 20)
+        margin 10px 0 3px 0
+      ul.items
+        margin 0
+        padding 0
+        list-style none
+        > li
+          &:not(:last-child)
+            border-bottom 1px dotted borderColor
+          > a
+            display block
+            padding 5px 0
+            &:before, &:after
+              content ''
+              display table
+            &:after
+              clear both
+            p.title
+              float left
+              margin 0
+              font-size 13px
+              color lighten(black, 10)
+            span.label
+              float right
+          > div.progress
+            height 5px
+            overflow hidden
+            > div.meter
+              background-color infoColor
+    > div.footer
+      text-align right
+      background-color darken(white, 3)
+      padding 10px
+      > .button
+        margin 0
+
+
+
+

@@ -1,0 +1,22 @@
+{
+  "name": "ClickLion",
+  "version": "0.1.0",
+  "dependencies": {
+    "grunt": "*",
+    "grunt-autoprefixer": "*",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-coffee": "*",
+    "grunt-contrib-connect": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-cssmin": "*",
+    "grunt-contrib-imagemin": "^0.9.1",
+    "grunt-contrib-jade": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-sass": "^0.8.1",
+    "grunt-contrib-stylus": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-newer": "^0.8.0",
+    "grunt-notify": "^0.4.1"
+  }
+}

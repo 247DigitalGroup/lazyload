@@ -1,0 +1,104 @@
+extends layouts/acp
+
+block script
+  script(type="text/javascript", src="components/ngInfiniteScroll/build/ng-infinite-scroll.min.js")
+
+block top-bar-menu
+  li
+    a(href="acp.html") Admin Control Panel
+  li
+    a(href="/") Home
+  li
+    a(href="dashboard.html") Dashboard
+
+block content-menu
+  ul.menu
+    li.title Start
+    li.active
+      a 
+        i.fa.fa-newspaper-o.space-10
+        | Articles Review
+        span.new.right 5
+      ul.menu
+        li
+          a(data-reveal-id="manual-query-modal", href="#")
+            span.fa.fa-search.space-10
+            | Manual query
+        li
+          a(data-reveal-id="options-query-modal", href="#")
+            span.fa.fa-check-square-o.space-10
+            | Query with options
+    li
+      a 
+        i.fa.fa-sliders.space-10
+        | Crawlers Status
+        span.new.right 8
+    li
+      a 
+        i.fa.fa-bug.space-10
+        | Reported Bugs
+        
+block content-body
+  div(ng-controller="ArticlesController")
+    .row
+      .column
+        h3(ng-if="query != ''", ng-cloak) Result for query 
+          strong {{query}}
+        ul.articles.small-block-grid-1.medium-block-grid-2.large-block-grid-4(ng-cloak, infinite-scroll="nextPage()", infinite-scroll-disabled="apiService.search.busy || apiService.search.error != 0", infinite-scroll-distance="0", infinite-scroll-immediate-check="false")
+          li(ng-repeat="item in results", ng-class="item.isCurrent ? 'active' : ''")
+            .item(ng-click="setCurrent(item)")
+              .image(ng-style="{'background-image': 'url({{item.image_url}})'}", cl-face-image)
+                .face(ng-if="item.face_coordinates")
+                  div {{item.face_coordinates}}
+                  div(ng-bind="calcSizeRatio($event, item)")
+                  div {{item.imageRatio}}
+              h3.title {{item.title}}
+              //- p.body
+                span {{ item.body.substr(0, 60) }}
+                br
+                span.fa.fa-ellipsis-h.space-10
+                span {{ item.body.substr(item.body.length - 60, 60) }}
+        .loader.zoomIn.animated(ng-class="{'invisible': apiService.search.busy == false }")
+        .alert-box.secondary.radius.fadeIn.animated(ng-show="apiService.search.error > 0") Content not found or empty data
+
+    #manual-query-modal.reveal-modal.medium(data-reveal)
+      a.close-reveal-modal &#215;
+      h3 Review by queries
+      form(ng-submit="sendQuery()")
+        input(type="text", placeholder="enter your queries here...", ng-model="query")
+        button.right.info Send
+
+    #options-query-modal.reveal-modal.small(data-reveal)
+      a.close-reveal-modal &#215;
+      h3 Review by queries
+      form(ng-submit="sendQuery()").two-columns.border
+        .row
+          .column.small-4
+            label(for="query-domain") domain
+          .column.small-8
+            input(type="text", ng-modal="query.domain")
+        .row
+          .column.small-4
+            label(for="query-domain") type
+          .column.small-8
+            select(ng-modal="query.type")
+              option(value="") any type
+              option(value="articles") articles
+        .row
+          .column.small-8.small-push-4
+            button.info Send
+
+    #article-preview-modal.reveal-modal.full.article-preview(data-reveal)
+      a.close-reveal-modal &#215;
+      .row.full-width
+        .column.small-12.medium-5.large-4
+          .data
+            h3.title {{currentItem.title}}
+            p.published {{currentItem.pubdate}}
+            a(href="{{currentItem.url}}", target="_blank")
+              p.url {{currentItem.url}}
+            .image
+              img(ng-src="{{currentItem.image_url}}")
+            p.body {{currentItem.body}}
+        .column.small-12.medium-7.large-8
+          iframe.source(ng-src="{{currentItem.trustedUrl}}", sandbox)
