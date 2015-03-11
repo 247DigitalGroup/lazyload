@@ -54,7 +54,7 @@ block content-body
               table.scores(ng-click="checkScores($event)")
                 tbody
                   tr(ng-repeat="category in item.categories")
-                    td {{category.id}}
+                    td {{categories[category.id]}}
                     td {{category.score}}
               //- p.body
                 span {{ item.body.substr(0, 60) }}

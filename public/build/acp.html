@@ -75,7 +75,7 @@
                       <table ng-click="checkScores($event)" class="scores">
                         <tbody>
                           <tr ng-repeat="category in item.categories">
-                            <td>{{category.id}}</td>
+                            <td>{{categories[category.id]}}</td>
                             <td>{{category.score}}</td>
                           </tr>
                         </tbody>

@@ -134,6 +134,28 @@
       }
       return output;
     };
+    $scope.categories = [];
+    $scope.categories[1] = 'Retailers & General Merchandise';
+    $scope.categories[2] = 'Dining & Nightlife';
+    $scope.categories[3] = 'Media & Publications';
+    $scope.categories[4] = 'Real Estate';
+    $scope.categories[5] = 'Telecom';
+    $scope.categories[6] = 'Occasions & Gifts';
+    $scope.categories[7] = 'Jobs & Education';
+    $scope.categories[8] = 'Travel & Tourism';
+    $scope.categories[9] = 'Beauty & Personal Care';
+    $scope.categories[10] = 'Vehicles';
+    $scope.categories[11] = 'Law & Government';
+    $scope.categories[12] = 'Food & Groceries';
+    $scope.categories[13] = 'Apparel';
+    $scope.categories[14] = 'Finance';
+    $scope.categories[15] = 'Arts & Entertainment';
+    $scope.categories[16] = 'Family & Community';
+    $scope.categories[17] = 'Sports & Fitness';
+    $scope.categories[18] = 'Home & Garden';
+    $scope.categories[19] = 'Digital Technology';
+    $scope.categories[21] = 'Health';
+    $scope.categories[22] = 'Business & Industrial';
     $scope.sendQuery = function() {
       var sc;
       $(previewModal).foundation('reveal', 'close');
