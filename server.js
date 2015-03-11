@@ -39,7 +39,7 @@ app.post('/articles', function(req, res, next) {
       } else {
           res.send({'totalResults': itemCount, 'results': results})
       }
-    }, { columns: 'url title body image_url pubdate face_coordinates'});
+    }, { columns: 'url title body image_url pubdate face_coordinates contextual_scores'});
 });
 
 app.get('*', function(req, res) {
