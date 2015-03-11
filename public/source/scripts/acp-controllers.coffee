@@ -1,10 +1,19 @@
 ACP = angular.module 'ACP', ['infinite-scroll']
 ACP.value 'THROTTLE_MILLISECONDS', 250
 
+ACP.filter 'toArray', () ->
+	(obj) ->
+		result = []
+		angular.forEach obj, (val, key) ->
+			result.push
+				key: key
+				value: val
+		result
+
 ACP.factory 'APIService', ($http) ->
 
 	apiService = () ->
-		@root = 'http://192.168.1.214:3000'
+		@root = 'http://192.168.1.17:3000'
 		@search =
 			url: "#{@root}/articles"
 			session: null
@@ -72,18 +81,36 @@ ACP.controller 'ArticlesController', ($scope, APIService, $http, $sce) ->
 
 	previewModal = $ '#article-preview-modal'
 
+	parser = (results) ->
+		output = []
+		compare = (a, b) ->
+			if a.score > b.score
+				return -1
+			if b.score > a.score
+				return 1
+			return 0
+		for item in results
+			item.categories = []
+			for id, score of item.contextual_scores
+				item.categories.push
+					id: id
+					score: score
+			item.categories.sort compare
+			output.push item
+		output
+
 	$scope.sendQuery = () ->
 		$ previewModal
 			.foundation 'reveal', 'close'
 		$scope.results = []
 		sc = (data, status, header, config) ->
-			$scope.results = data.results
+			$scope.results = parser data.results
 		$scope.apiService.searchStart $scope.query, sc, null
 		null
 
 	$scope.nextPage = () ->
 		sc = (data, status, header, config) ->
-			$scope.results = $scope.results.concat data.results
+			$scope.results = $scope.results.concat parser(data.results)
 		$scope.apiService.searchNextPage sc, null
 		null
 
@@ -98,6 +125,14 @@ ACP.controller 'ArticlesController', ($scope, APIService, $http, $sce) ->
 		$scope.currentItem.trustedUrl = $sce.trustAsResourceUrl item.url
 		$ previewModal
 			.foundation 'reveal', 'open'
+		null
+
+	$scope.checkScores = (e) ->
+		console.log e
+		$ e.currentTarget
+			.toggleClass 'expanded'
+		e.stopPropagation()
+		e.preventDefault()
 		null
 
 	$scope.sendQuery()

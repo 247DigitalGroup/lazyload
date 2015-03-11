@@ -46,11 +46,16 @@ block content-body
           strong {{query}}
         ul.articles.small-block-grid-1.medium-block-grid-2.large-block-grid-4(ng-cloak, infinite-scroll="nextPage()", infinite-scroll-disabled="apiService.search.busy || apiService.search.error != 0", infinite-scroll-distance="0", infinite-scroll-immediate-check="false")
           li(ng-repeat="item in results", ng-class="item.isCurrent ? 'active' : ''")
-            .item(ng-click="setCurrent(item)")
-              .image(ng-style="{'background-image': 'url({{item.image_url}})'}", cl-face-image)
+            .item
+              .image(ng-style="{'background-image': 'url({{item.image_url}})'}", cl-face-image, ng-click="setCurrent(item)")
                 .range(ng-if="item.face_coordinates", ng-style="{'top': item.scale.y, 'left': item.scale.x, 'bottom': item.scale.y, 'right': item.scale.x}")
                   .face(ng-style="{'left': item.scale.face.x, 'top': item.scale.face.y, 'width': item.scale.face.w, 'height': item.scale.face.h}")
               h3.title {{item.title}}
+              table.scores(ng-click="checkScores($event)")
+                tbody
+                  tr(ng-repeat="category in item.categories")
+                    td {{category.id}}
+                    td {{category.score}}
               //- p.body
                 span {{ item.body.substr(0, 60) }}
                 br

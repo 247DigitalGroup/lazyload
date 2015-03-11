@@ -111,7 +111,7 @@ module.exports = (grunt) ->
     watch:
       options:
         spawn: false
-        livereload: true
+        livereload: false
       scripts:
         files: 'source/**/*.coffee'
         tasks: ['scripts', 'notify:scripts']
@@ -137,7 +137,7 @@ module.exports = (grunt) ->
       server:
         options:
           hostname: '*'
-          port: 8080
+          port: 7070
           base: 'build/'
 
   grunt.loadNpmTasks 'grunt-contrib-connect'

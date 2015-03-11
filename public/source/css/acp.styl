@@ -127,6 +127,28 @@ ul.articles
 				overflow hidden
 				text-overflow ellipse
 				margin 0
+			table.scores
+				width 100%
+				margin 5px 0 0 0
+				border none
+				&.expanded
+					tr
+						display table-row !important
+				tr
+					display none
+					&:first-child
+						display table-row
+					td
+						padding 0
+						border none
+						&:first-child
+							font-weight bold
+							text-transform uppercase
+							font-size 12px
+						&:last-child
+							text-align right
+							font-size 12px
+							font-weight bold
 				
 div.article-preview
 	height = 860px
