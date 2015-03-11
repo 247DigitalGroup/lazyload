@@ -168,7 +168,6 @@
       return null;
     };
     $scope.checkScores = function(e) {
-      console.log(e);
       $(e.currentTarget).toggleClass('expanded');
       e.stopPropagation();
       e.preventDefault();

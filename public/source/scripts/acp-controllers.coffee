@@ -128,7 +128,6 @@ ACP.controller 'ArticlesController', ($scope, APIService, $http, $sce) ->
 		null
 
 	$scope.checkScores = (e) ->
-		console.log e
 		$ e.currentTarget
 			.toggleClass 'expanded'
 		e.stopPropagation()
