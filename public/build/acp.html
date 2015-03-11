@@ -65,13 +65,21 @@
                 <h3 ng-if="query != ''" ng-cloak>Result for query <strong>{{query}}</strong></h3>
                 <ul ng-cloak infinite-scroll="nextPage()" infinite-scroll-disabled="apiService.search.busy || apiService.search.error != 0" infinite-scroll-distance="0" infinite-scroll-immediate-check="false" class="articles small-block-grid-1 medium-block-grid-2 large-block-grid-4">
                   <li ng-repeat="item in results" ng-class="item.isCurrent ? 'active' : ''">
-                    <div ng-click="setCurrent(item)" class="item">
-                      <div ng-style="{'background-image': 'url({{item.image_url}})'}" cl-face-image class="image">
+                    <div class="item">
+                      <div ng-style="{'background-image': 'url({{item.image_url}})'}" cl-face-image ng-click="setCurrent(item)" class="image">
                         <div ng-if="item.face_coordinates" ng-style="{'top': item.scale.y, 'left': item.scale.x, 'bottom': item.scale.y, 'right': item.scale.x}" class="range">
                           <div ng-style="{'left': item.scale.face.x, 'top': item.scale.face.y, 'width': item.scale.face.w, 'height': item.scale.face.h}" class="face"></div>
                         </div>
                       </div>
                       <h3 class="title">{{item.title}}</h3>
+                      <table ng-click="checkScores($event)" class="scores">
+                        <tbody>
+                          <tr ng-repeat="category in item.categories">
+                            <td>{{categories[category.id]}}</td>
+                            <td>{{category.score}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </li>
                 </ul>

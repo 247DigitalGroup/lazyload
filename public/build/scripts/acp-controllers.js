@@ -5,10 +5,24 @@
 
   ACP.value('THROTTLE_MILLISECONDS', 250);
 
+  ACP.filter('toArray', function() {
+    return function(obj) {
+      var result;
+      result = [];
+      angular.forEach(obj, function(val, key) {
+        return result.push({
+          key: key,
+          value: val
+        });
+      });
+      return result;
+    };
+  });
+
   ACP.factory('APIService', function($http) {
     var apiService;
     apiService = function() {
-      this.root = 'http://192.168.1.214:3000';
+      this.root = 'http://192.168.1.17:3000';
       this.search = {
         url: "" + this.root + "/articles",
         session: null,
@@ -84,7 +98,7 @@
   });
 
   ACP.controller('ArticlesController', function($scope, APIService, $http, $sce) {
-    var previewModal;
+    var parser, previewModal;
     $scope.apiService = new APIService();
     $scope.query = '{"link_type": "article", "domain": "cnn.com"}';
     $scope.results = [];
@@ -92,12 +106,62 @@
       html: ''
     };
     previewModal = $('#article-preview-modal');
+    parser = function(results) {
+      var compare, id, item, output, score, _i, _len, _ref;
+      output = [];
+      compare = function(a, b) {
+        if (a.score > b.score) {
+          return -1;
+        }
+        if (b.score > a.score) {
+          return 1;
+        }
+        return 0;
+      };
+      for (_i = 0, _len = results.length; _i < _len; _i++) {
+        item = results[_i];
+        item.categories = [];
+        _ref = item.contextual_scores;
+        for (id in _ref) {
+          score = _ref[id];
+          item.categories.push({
+            id: id,
+            score: score
+          });
+        }
+        item.categories.sort(compare);
+        output.push(item);
+      }
+      return output;
+    };
+    $scope.categories = [];
+    $scope.categories[1] = 'Retailers & General Merchandise';
+    $scope.categories[2] = 'Dining & Nightlife';
+    $scope.categories[3] = 'Media & Publications';
+    $scope.categories[4] = 'Real Estate';
+    $scope.categories[5] = 'Telecom';
+    $scope.categories[6] = 'Occasions & Gifts';
+    $scope.categories[7] = 'Jobs & Education';
+    $scope.categories[8] = 'Travel & Tourism';
+    $scope.categories[9] = 'Beauty & Personal Care';
+    $scope.categories[10] = 'Vehicles';
+    $scope.categories[11] = 'Law & Government';
+    $scope.categories[12] = 'Food & Groceries';
+    $scope.categories[13] = 'Apparel';
+    $scope.categories[14] = 'Finance';
+    $scope.categories[15] = 'Arts & Entertainment';
+    $scope.categories[16] = 'Family & Community';
+    $scope.categories[17] = 'Sports & Fitness';
+    $scope.categories[18] = 'Home & Garden';
+    $scope.categories[19] = 'Digital Technology';
+    $scope.categories[21] = 'Health';
+    $scope.categories[22] = 'Business & Industrial';
     $scope.sendQuery = function() {
       var sc;
       $(previewModal).foundation('reveal', 'close');
       $scope.results = [];
       sc = function(data, status, header, config) {
-        return $scope.results = data.results;
+        return $scope.results = parser(data.results);
       };
       $scope.apiService.searchStart($scope.query, sc, null);
       return null;
@@ -105,7 +169,7 @@
     $scope.nextPage = function() {
       var sc;
       sc = function(data, status, header, config) {
-        return $scope.results = $scope.results.concat(data.results);
+        return $scope.results = $scope.results.concat(parser(data.results));
       };
       $scope.apiService.searchNextPage(sc, null);
       return null;
@@ -123,6 +187,12 @@
       $scope.currentItem = item;
       $scope.currentItem.trustedUrl = $sce.trustAsResourceUrl(item.url);
       $(previewModal).foundation('reveal', 'open');
+      return null;
+    };
+    $scope.checkScores = function(e) {
+      $(e.currentTarget).toggleClass('expanded');
+      e.stopPropagation();
+      e.preventDefault();
       return null;
     };
     $scope.sendQuery();
