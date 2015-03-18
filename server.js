@@ -21,7 +21,7 @@ mongoose.connect('localhost/lion_crawlers');
 
 var app = express();
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 6969);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -39,7 +39,7 @@ app.post('/articles', function(req, res, next) {
       } else {
           res.send({'totalResults': itemCount, 'results': results})
       }
-    }, { columns: 'url title body image_url pubdate face_coordinates'});
+    }, { columns: 'url title body image_url pubdate face_coordinates contextual_scores'});
 });
 
 app.get('*', function(req, res) {
