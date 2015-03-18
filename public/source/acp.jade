@@ -44,6 +44,11 @@ block content-body
       .column
         h3(ng-if="query != ''", ng-cloak) Result for query 
           strong {{query}}
+        .right
+          a.button.info(ng-click="reload()")
+            span.fa.fa-repeat.mr-5
+            | Reload
+        .clearfix
         ul.articles.small-block-grid-1.medium-block-grid-2.large-block-grid-4(ng-cloak, infinite-scroll="nextPage()", infinite-scroll-disabled="apiService.search.busy || apiService.search.error != 0", infinite-scroll-distance="0", infinite-scroll-immediate-check="false")
           li(ng-repeat="item in results", ng-class="item.isCurrent ? 'active' : ''")
             .item

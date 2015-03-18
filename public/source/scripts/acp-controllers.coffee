@@ -13,7 +13,7 @@ ACP.filter 'toArray', () ->
 ACP.factory 'APIService', ($http) ->
 
 	apiService = () ->
-		@root = 'http://192.168.1.17:3000'
+		@root = 'http://192.168.1.17:6969'
 		@search =
 			url: "#{@root}/articles"
 			session: null
@@ -73,7 +73,7 @@ ACP.controller 'ArticlesController', ($scope, APIService, $http, $sce) ->
 
 	$scope.apiService = new APIService()
 
-	$scope.query = '{"link_type": "article", "domain": "cnn.com"}'
+	$scope.query = '{"link_type": "article"}'
 	# $scope.query = '{"url": "http://money.cnn.com/2015/01/08/news/soros-ukraine-europe-50-billion/index.html?iid=HP_LN"}'
 	$scope.results = []
 	$scope.currentItem =
@@ -121,6 +121,10 @@ ACP.controller 'ArticlesController', ($scope, APIService, $http, $sce) ->
 	$scope.categories[19] = 'Digital Technology'
 	$scope.categories[21] = 'Health'
 	$scope.categories[22] = 'Business & Industrial'
+
+	$scope.reload = () ->
+		$scope.sendQuery()
+		null
 
 	$scope.sendQuery = () ->
 		$ previewModal

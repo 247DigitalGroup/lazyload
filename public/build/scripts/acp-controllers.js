@@ -22,7 +22,7 @@
   ACP.factory('APIService', function($http) {
     var apiService;
     apiService = function() {
-      this.root = 'http://192.168.1.17:3000';
+      this.root = 'http://192.168.1.17:6969';
       this.search = {
         url: "" + this.root + "/articles",
         session: null,
@@ -100,7 +100,7 @@
   ACP.controller('ArticlesController', function($scope, APIService, $http, $sce) {
     var parser, previewModal;
     $scope.apiService = new APIService();
-    $scope.query = '{"link_type": "article", "domain": "cnn.com"}';
+    $scope.query = '{"link_type": "article"}';
     $scope.results = [];
     $scope.currentItem = {
       html: ''
@@ -156,6 +156,10 @@
     $scope.categories[19] = 'Digital Technology';
     $scope.categories[21] = 'Health';
     $scope.categories[22] = 'Business & Industrial';
+    $scope.reload = function() {
+      $scope.sendQuery();
+      return null;
+    };
     $scope.sendQuery = function() {
       var sc;
       $(previewModal).foundation('reveal', 'close');
