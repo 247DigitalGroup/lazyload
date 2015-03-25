@@ -29,7 +29,28 @@
         busy: false,
         error: 0
       };
+      this.paginate = {};
       return null;
+    };
+    apiService.prototype.getPaginate = function() {
+      var cls, i, paginate, _i, _ref, _ref1;
+      paginate = [];
+      if (this.search.session !== null) {
+        for (i = _i = _ref = this.search.session.page - 5, _ref1 = this.search.session.page + 5; _i <= _ref1; i = _i += 1) {
+          if (i > 0 && i < (this.search.session.total / this.search.session.count).toFixed(0)) {
+            cls = [];
+            if (i === this.search.session.page) {
+              cls = ['current'];
+            }
+            paginate.push({
+              label: i,
+              href: '#',
+              "class": cls
+            });
+          }
+        }
+      }
+      return paginate;
     };
     apiService.prototype.searchStart = function(query, sc, ec) {
       var e, postData, that;
@@ -37,6 +58,7 @@
         postData = {
           query: JSON.parse(query),
           count: 20,
+          total: 0,
           page: 1
         };
         this.search.busy = true;
@@ -44,6 +66,9 @@
         that = this;
         $http.post(this.search.url, postData).success(function(data, status, header, config) {
           that.search.session = postData;
+          if (typeof data.totalResults !== 'undefined') {
+            postData.total = data.totalResults;
+          }
           if (typeof sc === 'function') {
             sc(data, status, header, config);
           }
@@ -55,6 +80,40 @@
           that.search.busy = false;
           return that.search.error = 404;
         });
+      } catch (_error) {
+        e = _error;
+        console.log(e);
+      }
+      return null;
+    };
+    apiService.prototype.getPage = function(p, sc, ec) {
+      var e, postData, that;
+      p = parseInt(p, 10);
+      try {
+        if (this.search.session != null) {
+          this.search.busy = true;
+          postData = this.search.session;
+          postData.page = p;
+          that = this;
+          $http.post(this.search.url, postData).success(function(data, status, header, config) {
+            that.search.error = 0;
+            that.search.session = postData;
+            if (data.results.length === 0) {
+              that.search.error = 204;
+            } else {
+              if (typeof sc === 'function') {
+                sc(data, status, header, config);
+              }
+            }
+            return that.search.busy = false;
+          }).error(function(data, status, header, config) {
+            if (typeof ec === 'function') {
+              ec(data, status, header, config);
+            }
+            that.search.error = 404;
+            return that.search.busy = false;
+          });
+        }
       } catch (_error) {
         e = _error;
         console.log(e);
@@ -105,6 +164,7 @@
     $scope.currentItem = {
       html: ''
     };
+    $scope.paginate = [];
     previewModal = $('#article-preview-modal');
     parser = function(results) {
       var compare, id, item, output, score, _i, _len, _ref;
@@ -165,17 +225,29 @@
       $(previewModal).foundation('reveal', 'close');
       $scope.results = [];
       sc = function(data, status, header, config) {
+        $scope.paginate = $scope.apiService.getPaginate();
         return $scope.results = parser(data.results);
       };
       $scope.apiService.searchStart($scope.query, sc, null);
       return null;
     };
-    $scope.nextPage = function() {
+    $scope.getPage = function(p) {
       var sc;
       sc = function(data, status, header, config) {
-        return $scope.results = $scope.results.concat(parser(data.results));
+        $scope.paginate = $scope.apiService.getPaginate();
+        return $scope.results = parser(data.results);
       };
-      $scope.apiService.searchNextPage(sc, null);
+      $scope.apiService.getPage(p, sc, null);
+      return null;
+    };
+    $scope.getFirstPage = function() {
+      $scope.getPage(1);
+      return null;
+    };
+    $scope.getLastPage = function() {
+      var lastIndex;
+      lastIndex = ($scope.apiService.search.session.total / $scope.apiService.search.session.count).toFixed(0);
+      $scope.getPage(lastIndex);
       return null;
     };
     $scope.cancelCurrent = function() {

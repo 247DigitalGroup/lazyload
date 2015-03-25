@@ -1,14 +1,15 @@
 ACP = angular.module 'ACP', ['infinite-scroll']
 ACP.value 'THROTTLE_MILLISECONDS', 250
 
-ACP.filter 'toArray', () ->
-	(obj) ->
-		result = []
-		angular.forEach obj, (val, key) ->
-			result.push
-				key: key
-				value: val
-		result
+ACP
+	.filter 'toArray', () ->
+		(obj) ->
+			result = []
+			angular.forEach obj, (val, key) ->
+				result.push
+					key: key
+					value: val
+			result
 
 ACP.factory 'APIService', ($http) ->
 
@@ -19,13 +20,28 @@ ACP.factory 'APIService', ($http) ->
 			session: null
 			busy: false
 			error: 0
+		@paginate = {}
 		null
+
+	apiService.prototype.getPaginate = () ->
+		paginate = []
+		unless @search.session is null
+			for i in [@search.session.page - 5 .. @search.session.page + 5] by 1
+				if i > 0 and i < (@search.session.total / @search.session.count).toFixed(0)
+					cls = []
+					if i == @search.session.page then cls = ['current']
+					paginate.push
+						label: i
+						href: '#'
+						class: cls
+		paginate
 
 	apiService.prototype.searchStart = (query, sc, ec) ->
 		try
 			postData =
 				query: JSON.parse query
 				count: 20
+				total: 0
 				page: 1
 			@search.busy = true
 			@search.error = 0
@@ -33,12 +49,39 @@ ACP.factory 'APIService', ($http) ->
 			$http.post @search.url, postData
 				.success (data, status, header, config) ->
 					that.search.session = postData
+					if typeof data.totalResults isnt 'undefined'
+						postData.total = data.totalResults
 					sc(data, status, header, config) if typeof sc is 'function'
 					that.search.busy = false
 				.error (data, status, header, config) ->
 					ec(data, status, header, config) if typeof ec is 'function'
 					that.search.busy = false
 					that.search.error = 404
+		catch e
+			console.log e
+		null
+
+	apiService.prototype.getPage = (p, sc, ec) ->
+		p = parseInt p, 10
+		try
+			if @search.session?
+				@search.busy = true
+				postData = @search.session
+				postData.page = p
+				that = @
+				$http.post @search.url, postData
+					.success (data, status, header, config) ->
+						that.search.error = 0
+						that.search.session = postData
+						if data.results.length == 0
+							that.search.error = 204
+						else
+							sc(data, status, header, config) if typeof sc is 'function'
+						that.search.busy = false
+					.error (data, status, header, config) ->
+						ec(data, status, header, config) if typeof ec is 'function'
+						that.search.error = 404
+						that.search.busy = false
 		catch e
 			console.log e
 		null
@@ -78,6 +121,8 @@ ACP.controller 'ArticlesController', ($scope, APIService, $http, $sce) ->
 	$scope.results = []
 	$scope.currentItem =
 		html: ''
+
+	$scope.paginate = []
 
 	previewModal = $ '#article-preview-modal'
 
@@ -131,14 +176,25 @@ ACP.controller 'ArticlesController', ($scope, APIService, $http, $sce) ->
 			.foundation 'reveal', 'close'
 		$scope.results = []
 		sc = (data, status, header, config) ->
+			$scope.paginate = $scope.apiService.getPaginate()
 			$scope.results = parser data.results
 		$scope.apiService.searchStart $scope.query, sc, null
 		null
 
-	$scope.nextPage = () ->
+	$scope.getPage = (p) ->
 		sc = (data, status, header, config) ->
-			$scope.results = $scope.results.concat parser(data.results)
-		$scope.apiService.searchNextPage sc, null
+			$scope.paginate = $scope.apiService.getPaginate()
+			$scope.results = parser data.results
+		$scope.apiService.getPage p, sc, null
+		null
+
+	$scope.getFirstPage = () ->
+		$scope.getPage 1
+		null
+
+	$scope.getLastPage = () ->
+		lastIndex = ($scope.apiService.search.session.total / $scope.apiService.search.session.count).toFixed 0
+		$scope.getPage lastIndex
 		null
 
 	$scope.cancelCurrent = () ->

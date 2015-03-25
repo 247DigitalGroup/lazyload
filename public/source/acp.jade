@@ -49,7 +49,16 @@ block content-body
             span.fa.fa-repeat.mr-5
             | Reload
         .clearfix
-        ul.articles.small-block-grid-1.medium-block-grid-2.large-block-grid-4(ng-cloak, infinite-scroll="nextPage()", infinite-scroll-disabled="apiService.search.busy || apiService.search.error != 0", infinite-scroll-distance="0", infinite-scroll-immediate-check="false")
+        ul.pagination.right
+          li.arrow
+            a(href="#", ng-click="getFirstPage()") &laquo;
+          li(ng-repeat="(k, v) in paginate", ng-class="{{ v.class }}")
+            a(href="#", ng-click="getPage(v.label)") {{ v.label }}
+          li.arrow
+            a(href="#", ng-click="getLastPage()") &raquo;
+        .clearfix
+        //- ul.articles.small-block-grid-1.medium-block-grid-2.large-block-grid-4(ng-cloak, infinite-scroll="nextPage()", infinite-scroll-disabled="apiService.search.busy || apiService.search.error != 0", infinite-scroll-distance="0", infinite-scroll-immediate-check="false")
+        ul.articles.small-block-grid-1.medium-block-grid-2.large-block-grid-4(ng-cloak)
           li(ng-repeat="item in results", ng-class="item.isCurrent ? 'active' : ''")
             .item
               .image(ng-style="{'background-image': 'url({{item.image_url}})'}", cl-face-image, ng-click="setCurrent(item)")
