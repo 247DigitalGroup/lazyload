@@ -31,7 +31,7 @@ module.exports = function(passport){
   );
 
   /* Handle Signout */
-  router.get('/signout', function(req, res) {
+  router.get('/logout', function(req, res) {
     req.logout();
   });
 
@@ -48,24 +48,69 @@ module.exports = function(passport){
   router.post('/articles/tag', isAuthenticated, function(req, res, next) {
     var id = req.body.id
     var tag = req.body.tag
+    var note = req.body.note
+    var low_quality_image = req.body.low_quality_image
+    var image_blocked = req.body.image_blocked
     if (id && tag) {
-      Article.update(
+      var query = {
+            '$push': {
+              'tags': {
+                'tag': tag,
+                'user': req.user.email
+              }
+            }
+          }
+      if (note) {
+        query['$push']['notes'] = {
+          'note': note,
+          'user': req.user.email
+        }
+      }
+      if (low_quality_image) {
+          query['$set'] = {'low_quality_image': true}
+      }
+      if (image_blocked) {
+        if ('$set' in query) {
+          query['$set']['image_blocked'] = true
+        } else {
+          query['$set'] = {'image_blocked': true}
+        } 
+      }
+      Article.findOneAndUpdate(
         {'_id': id},
-        {'$push': { 'tags': { 'tag': tag, 'user': req.user.email}}},
-        {safe: true, upsert: false},
+        query, {safe: true, upsert: false},
         function(error, result){
           if (error) {return next(error)}
         });
     };
-    Article.findOne(
-      {'$and': [
-        {'$where': 'this.tags.length<2'},
-        {'tags.user': {'$ne': req.user.email}}
-      ]}, '_id url title image_url', function (error, doc) {
-        if (error) {return next(error);}
-        var data = {'data': doc};
+    var rand = Math.random();
+    var gte_filter = {'$and': [
+          {'rnd': {'$gte': rand}},
+          {'$where': 'this.tags.length<2'},
+          {'tags.user': {'$ne': req.user.email}}
+      ]};
+    var fields = { _id: 1, url: 1, title: 1, image_url: 1 };
+    Article.findOne(gte_filter, fields, function (error, result) {
+      if (result) {
+        var data = {'data': result};
         res.status(200).send(data);
-      });
+      } else {
+        var lte_filter = {'$and': [
+                    {'rnd': {'$lte': rand}},
+                    {'$where': 'this.tags.length<2'},
+                    {'tags.user': {'$ne': req.user.email}}
+            ]};
+        Article.findOne(lte_filter, fields, function (error, result) {
+          if (error) {return next(error);}
+            if (result) {
+              var data = {'data': result};
+              res.status(200).send(data);
+            } else {
+              res.status(200).send({'data': {}});
+            }
+        });
+      }
+    });
   });
 
   return router;

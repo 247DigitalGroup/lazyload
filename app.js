@@ -13,7 +13,7 @@ app.set('port', process.env.PORT || 6969);
 app.use(morgan('tiny'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({origin:true, credentials:true}));
 app.use(express.static(path.join(__dirname, 'public/build')));
 
 // mongoose

@@ -1,4 +1,3 @@
-
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var mongoosePaginate = require('mongoose-paginate');
@@ -10,8 +9,12 @@ var Article = new Schema({
     image_url: String,
     pubdate: Date,
     html: String,
-    tags: Array
+    tags: Array,
+    notes: Array,
+    image_blocked: Boolean,
+    low_quality_image: Boolean
 });
 
-Article.plugin(mongoosePaginate)
+Article.plugin(mongoosePaginate);
 module.exports = mongoose.model('articles', Article);
+
