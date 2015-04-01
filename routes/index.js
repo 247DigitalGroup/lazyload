@@ -83,7 +83,7 @@ module.exports = function(passport){
         } else {
           var lte_filter = {'$and': [
                       {'rnd': {'$lte': rand}},
-                      {'$where': 'this.tags.length<2'},
+                      {'$where': 'this.tags.length=0'},
                       {'tags.user': {'$ne': req.user.email}}
               ]};
           Article.findOne(lte_filter, fields, function (error, result) {
