@@ -5,22 +5,16 @@
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.10.1",
-    "chai": "^2.2.0",
+    "connect-flash": "0.1.1",
     "cors": "^2.5.2",
     "express": "~4.10.6",
     "express-session": "^1.10.4",
     "grunt-cli": "^0.1.13",
-    "mocha": "^2.2.1",
     "mongoose": "3.8",
     "mongoose-paginate": "^3.1.3",
     "morgan": "~1.5.1",
     "passport": "^0.2.1",
-    "passport-local": "^1.0.0",
-    "should": "^5.2.0",
-    "connect-flash": "0.1.1"
+    "passport-local": "^1.0.0"
   },
-  "scripts": {
-    "start": "node app.js",
-    "test": "make test"
-  }
+  "scripts": {}
 }
