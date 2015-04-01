@@ -71,8 +71,7 @@ module.exports = function(passport){
     var rand = Math.random();
     var gte_filter = {'$and': [
           {'rnd': {'$gte': rand}},
-          {'$where': 'this.tags.length=0'},
-          {'tags.user': {'$ne': req.user.email}}
+          {'$where': 'this.tags.length<1'}
       ]};
     var fields = { _id: 1, url: 1, title: 1, image_url: 1, notes: 1};
     Article.count({'tags.user': req.user.email}, function(error, count) {
@@ -83,8 +82,7 @@ module.exports = function(passport){
         } else {
           var lte_filter = {'$and': [
                       {'rnd': {'$lte': rand}},
-                      {'$where': 'this.tags.length=0'},
-                      {'tags.user': {'$ne': req.user.email}}
+                      {'$where': 'this.tags.length<1'}
               ]};
           Article.findOne(lte_filter, fields, function (error, result) {
             if (error) {return next(error);}
