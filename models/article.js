@@ -11,7 +11,9 @@ var Article = new Schema({
     html: String,
     tags: Array,
     notes: Array,
-    low_quality: Boolean
+    low_quality: Boolean,
+    tagged: Boolean,
+    assigned: String
 });
 
 Article.plugin(mongoosePaginate);
