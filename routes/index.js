@@ -75,26 +75,29 @@ module.exports = function(passport){
           {'tags.user': {'$ne': req.user.email}}
       ]};
     var fields = { _id: 1, url: 1, title: 1, image_url: 1, notes: 1};
-    Article.findOne(gte_filter, fields, function (error, result) {
-      if (result) {
-        var data = {'data': result};
-        res.status(200).send(data);
-      } else {
-        var lte_filter = {'$and': [
-                    {'rnd': {'$lte': rand}},
-                    {'$where': 'this.tags.length<2'},
-                    {'tags.user': {'$ne': req.user.email}}
-            ]};
-        Article.findOne(lte_filter, fields, function (error, result) {
-          if (error) {return next(error);}
-            if (result) {
-              var data = {'data': result};
-              res.status(200).send(data);
-            } else {
-              res.status(200).send({'data': {}});
-            }
-        });
-      }
+    Article.count({'tags.user': req.user.email}, function(error, count) {
+      Article.findOne(gte_filter, fields, function (error, result) {
+        if (result) {
+          var data = {'data': result, 'count': count};
+          res.status(200).send(data);
+        } else {
+          var lte_filter = {'$and': [
+                      {'rnd': {'$lte': rand}},
+                      {'$where': 'this.tags.length<2'},
+                      {'tags.user': {'$ne': req.user.email}}
+              ]};
+          Article.findOne(lte_filter, fields, function (error, result) {
+            if (error) {return next(error);}
+              if (result) {
+                var data = {'data': result, 'count': count};
+                res.status(200).send(data);
+              } else {
+                var data = {'data': {}, 'count': count};
+                res.status(200).send(data);
+              }
+          });
+        }
+      });
     });
   });
 
