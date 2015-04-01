@@ -71,7 +71,7 @@ module.exports = function(passport){
     var rand = Math.random();
     var gte_filter = {'$and': [
           {'rnd': {'$gte': rand}},
-          {'$where': 'this.tags.length<2'},
+          {'$where': 'this.tags.length=0'},
           {'tags.user': {'$ne': req.user.email}}
       ]};
     var fields = { _id: 1, url: 1, title: 1, image_url: 1, notes: 1};
