@@ -11,8 +11,7 @@ var Article = new Schema({
     html: String,
     tags: Array,
     notes: Array,
-    image_blocked: Boolean,
-    low_quality_image: Boolean
+    low_quality: Boolean
 });
 
 Article.plugin(mongoosePaginate);

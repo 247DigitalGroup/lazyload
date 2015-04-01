@@ -1,5 +1,6 @@
 var passport = require('passport');
 var Article = require('../models/article');
+var User = require('../models/user');
 var mongoosePaginate = require('mongoose-paginate');
 var express = require('express');
 var router = express.Router();
@@ -49,32 +50,16 @@ module.exports = function(passport){
     var id = req.body.id
     var tag = req.body.tag
     var note = req.body.note
-    var low_quality_image = req.body.low_quality_image
-    var image_blocked = req.body.image_blocked
+    var low_quality = req.body.low_quality
     if (id && tag) {
-      var query = {
-            '$push': {
-              'tags': {
-                'tag': tag,
-                'user': req.user.email
-              }
-            }
-          }
+      var query = {'$push': {'tags': {'tag': tag, 'user': req.user.email}}}
       if (note) {
         query['$push']['notes'] = {
           'note': note,
           'user': req.user.email
-        }
-      }
-      if (low_quality_image) {
-          query['$set'] = {'low_quality_image': true}
-      }
-      if (image_blocked) {
-        if ('$set' in query) {
-          query['$set']['image_blocked'] = true
-        } else {
-          query['$set'] = {'image_blocked': true}
-        } 
+        }}
+      if (low_quality) {
+          query['$set'] = {'low_quality': true}
       }
       Article.findOneAndUpdate(
         {'_id': id},
@@ -89,7 +74,7 @@ module.exports = function(passport){
           {'$where': 'this.tags.length<2'},
           {'tags.user': {'$ne': req.user.email}}
       ]};
-    var fields = { _id: 1, url: 1, title: 1, image_url: 1 };
+    var fields = { _id: 1, url: 1, title: 1, image_url: 1, notes: 1};
     Article.findOne(gte_filter, fields, function (error, result) {
       if (result) {
         var data = {'data': result};
