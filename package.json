@@ -16,7 +16,8 @@
     "morgan": "~1.5.1",
     "passport": "^0.2.1",
     "passport-local": "^1.0.0",
-    "should": "^5.2.0"
+    "should": "^5.2.0",
+    "connect-flash": "0.1.1"
   },
   "scripts": {
     "start": "node app.js",

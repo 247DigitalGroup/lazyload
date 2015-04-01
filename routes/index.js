@@ -58,7 +58,7 @@ module.exports = function(passport){
           'note': note,
           'user': req.user.email
         }}
-      if (low_quality) {
+      if (low_quality == 'true') {
           query['$set'] = {'low_quality': true}
       }
       Article.findOneAndUpdate(
