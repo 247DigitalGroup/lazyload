@@ -22,7 +22,7 @@
   ACP.factory('APIService', function($http) {
     var apiService;
     apiService = function() {
-      this.root = 'http://192.168.1.17:6969';
+      this.root = ''//http://192.168.1.17:6969';
       this.search = {
         url: "" + this.root + "/articles",
         session: null,
@@ -159,7 +159,7 @@
   ACP.controller('ArticlesController', function($scope, APIService, $http, $sce) {
     var parser, previewModal;
     $scope.apiService = new APIService();
-    $scope.query = '{"link_type": "article"}';
+    $scope.query = '{}';
     $scope.results = [];
     $scope.currentItem = {
       html: ''
