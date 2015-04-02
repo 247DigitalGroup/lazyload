@@ -78,6 +78,16 @@ block content-body
         .loader.zoomIn.animated(ng-class="{'invisible': apiService.search.busy == false }")
         .alert-box.secondary.radius.fadeIn.animated(ng-show="apiService.search.error > 0") Content not found or empty data
 
+        .clearfix
+        ul.pagination.right
+          li.arrow
+            a(href="#", ng-click="getFirstPage()") &laquo;
+          li(ng-repeat="(k, v) in paginate", ng-class="{{ v.class }}")
+            a(href="#", ng-click="getPage(v.label)") {{ v.label }}
+          li.arrow
+            a(href="#", ng-click="getLastPage()") &raquo;
+        .clearfix
+
     #manual-query-modal.reveal-modal.medium(data-reveal)
       a.close-reveal-modal &#215;
       h3 Review by queries
