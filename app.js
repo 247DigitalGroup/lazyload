@@ -14,7 +14,7 @@ app.use(morgan('tiny'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({origin:true, credentials:true}));
-app.use(express.static(path.join(__dirname, 'public/build')));
+app.use(express.static(path.join(__dirname, 'public/build/tagger')));
 
 // mongoose
 mongoose.connect('mongodb://localhost/lion_crawlers_test');
@@ -50,5 +50,5 @@ app.use(function(req, res, next) {
 module.exports = app;
 
 app.listen(app.get('port'), function(){
-  console.log(("Express server listening on port " + app.get('port')))
+    console.log(("Express server listening on port " + app.get('port')))
 });

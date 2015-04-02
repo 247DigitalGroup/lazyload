@@ -1,5 +1,6 @@
 var passport = require('passport');
 var Article = require('../models/article');
+var User = require('../models/user');
 var mongoosePaginate = require('mongoose-paginate');
 var express = require('express');
 var router = express.Router();
@@ -49,32 +50,21 @@ module.exports = function(passport){
     var id = req.body.id
     var tag = req.body.tag
     var note = req.body.note
-    var low_quality_image = req.body.low_quality_image
-    var image_blocked = req.body.image_blocked
+    var low_quality = req.body.low_quality
     if (id && tag) {
-      var query = {
-            '$push': {
-              'tags': {
-                'tag': tag,
-                'user': req.user.email
-              }
-            }
-          }
+      var query = {'$push': {'tags': {'tag': tag, 'user': req.user.email}}}
       if (note) {
         query['$push']['notes'] = {
           'note': note,
           'user': req.user.email
-        }
-      }
-      if (low_quality_image) {
-          query['$set'] = {'low_quality_image': true}
-      }
-      if (image_blocked) {
-        if ('$set' in query) {
-          query['$set']['image_blocked'] = true
-        } else {
-          query['$set'] = {'image_blocked': true}
-        } 
+        }}
+      if (low_quality == 'true') {
+          query['$set'] = {
+            'tagged': true,
+            'low_quality': true
+          }
+      } else {
+        query['$set'] = {'tagged': true}
       }
       Article.findOneAndUpdate(
         {'_id': id},
@@ -86,30 +76,41 @@ module.exports = function(passport){
     var rand = Math.random();
     var gte_filter = {'$and': [
           {'rnd': {'$gte': rand}},
-          {'$where': 'this.tags.length<2'},
-          {'tags.user': {'$ne': req.user.email}}
+          {'tagged': false}
       ]};
-    var fields = { _id: 1, url: 1, title: 1, image_url: 1 };
-    Article.findOne(gte_filter, fields, function (error, result) {
-      if (result) {
-        var data = {'data': result};
-        res.status(200).send(data);
-      } else {
-        var lte_filter = {'$and': [
-                    {'rnd': {'$lte': rand}},
-                    {'$where': 'this.tags.length<2'},
-                    {'tags.user': {'$ne': req.user.email}}
-            ]};
-        Article.findOne(lte_filter, fields, function (error, result) {
-          if (error) {return next(error);}
+    var fields = { _id: 1, url: 1, title: 1, image_url: 1, notes: 1};
+    Article.count({'tags.user': req.user.email}, function(error, count) {
+      Article.findOne({'assigned': req.user.email, 'tagged': false}, fields, function (error, result) {
+        if (result) {
+          Article.findOneAndUpdate({'_id': result['_id']}, {'$set': {'assigned': req.user.email}}).exec();
+          var data = {'data': result, 'count': count};
+          res.status(200).send(data);
+        } else {
+          Article.findOne(gte_filter, fields, function (error, result) {
             if (result) {
-              var data = {'data': result};
+              Article.findOneAndUpdate({'_id': result['_id']}, {'$set': {'assigned': req.user.email}}).exec();
+              var data = {'data': result, 'count': count};
               res.status(200).send(data);
             } else {
-              res.status(200).send({'data': {}});
+              var lte_filter = {'$and': [
+                          {'rnd': {'$lte': rand}},
+                          {'tagged': false}
+                  ]};
+              Article.findOne(lte_filter, fields, function (error, result) {
+                if (error) {return next(error);}
+                  if (result) {
+                    Article.findOneAndUpdate({'_id': result['_id']}, {'$set': {'assigned': req.user.email}}).exec();
+                    var data = {'data': result, 'count': count};
+                    res.status(200).send(data);
+                  } else {
+                    var data = {'data': {}, 'count': count};
+                    res.status(200).send(data);
+                  }
+              });
             }
-        });
-      }
+          });
+        }
+      });
     });
   });
 
