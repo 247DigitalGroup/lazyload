@@ -14,19 +14,23 @@ app.use(morgan('tiny'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({origin:true, credentials:true}));
-app.use(express.static(path.join(__dirname, 'public/build/tagger')));
+app.use(express.static(path.join(__dirname, 'public/build')));
 
 // mongoose
 mongoose.connect('mongodb://localhost/lion_crawlers_test');
 
-// Configuring Passport
-var passport = require('passport');
+// Session
 var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
 app.use(session({
-  secret: 'keyboard cat',
+  store: new RedisStore(),
+  secret: 'big cats',
   resave: false,
   saveUninitialized: true
 }))
+
+// Passport
+var passport = require('passport');
 app.use(passport.initialize());
 app.use(passport.session());
 
