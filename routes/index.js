@@ -58,16 +58,19 @@ module.exports = function(passport){
           'note': note,
           'user': req.user.email
         }}
-      query['$set'] = {
-        'tagged': true,
-        'count': {'$inc': 1}
-      }
+      query['$set'] = {'tagged': true}
       if (low_quality == 'true') {
           query['$set']['low_quality'] = true
       }
       Article.findOneAndUpdate(
         {'_id': id},
         query, {safe: true, upsert: false},
+        function(error, result){
+          if (error) {return next(error)}
+        });
+      User.findOneAndUpdate(
+        {'email': req.user.email},
+        {'count': {'$inc': 1}}, {safe: true, upsert: false},
         function(error, result){
           if (error) {return next(error)}
         });
