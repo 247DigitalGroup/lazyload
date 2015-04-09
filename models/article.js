@@ -13,7 +13,8 @@ var Article = new Schema({
     notes: Array,
     low_quality: Boolean,
     tagged: Boolean,
-    assigned: String
+    assigned: String,
+    count: Number
 });
 
 Article.plugin(mongoosePaginate);

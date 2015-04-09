@@ -58,7 +58,10 @@ module.exports = function(passport){
           'note': note,
           'user': req.user.email
         }}
-      query['$set'] = {'tagged': true}
+      query['$set'] = {
+        'tagged': true,
+        'count': {'$inc': 1}
+      }
       if (low_quality == 'true') {
           query['$set']['low_quality'] = true
       }
@@ -75,7 +78,8 @@ module.exports = function(passport){
           {'assigned': ""}
       ]};
     var fields = { _id: 1, url: 1, title: 1, image_url: 1, notes: 1};
-    Article.count({'assigned': req.user.email}, function(error, count) {
+    User.findOne({'email': req.user.email}, function(error, result) {
+      var count = result['count'];
       Article.findOne({'tagged': false, 'assigned': req.user.email}, fields, function (error, result) {
         if (result) {
           Article.findOneAndUpdate({'_id': result['_id']}, {'$set': {'assigned': req.user.email}}).exec();
