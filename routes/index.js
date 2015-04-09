@@ -70,7 +70,7 @@ module.exports = function(passport){
         });
       User.findOneAndUpdate(
         {'email': req.user.email},
-        {'count': {'$inc': 1}}, {safe: true, upsert: false},
+        {'$inc': {'count': 1}}, {safe: true, upsert: false},
         function(error, result){
           if (error) {return next(error)}
         });
