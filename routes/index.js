@@ -58,13 +58,9 @@ module.exports = function(passport){
           'note': note,
           'user': req.user.email
         }}
+      query['$set'] = {'tagged': true}
       if (low_quality == 'true') {
-          query['$set'] = {
-            'tagged': true,
-            'low_quality': true
-          }
-      } else {
-        query['$set'] = {'tagged': true}
+          query['$set']['low_quality'] = true
       }
       Article.findOneAndUpdate(
         {'_id': id},
@@ -72,38 +68,45 @@ module.exports = function(passport){
         function(error, result){
           if (error) {return next(error)}
         });
+      User.findOneAndUpdate(
+        {'email': req.user.email},
+        {'$inc': {'count': 1}},
+        {safe: true, upsert: false},
+        function(error, result){
+          if (error) {return next(error)}
+        });
     };
     var rand = Math.random();
     var gte_filter = {'$and': [
           {'rnd': {'$gte': rand}},
-          {'tagged': false}
+          {'assigned': ""}
       ]};
     var fields = { _id: 1, url: 1, title: 1, image_url: 1, notes: 1};
-    Article.count({'tags.user': req.user.email}, function(error, count) {
-      Article.findOne({'assigned': req.user.email, 'tagged': false}, fields, function (error, result) {
+    User.findOne({'email': req.user.email}, function(error, user) {
+      Article.findOne({'tagged': false, 'assigned': req.user.email}, fields, function (error, result) {
         if (result) {
           Article.findOneAndUpdate({'_id': result['_id']}, {'$set': {'assigned': req.user.email}}).exec();
-          var data = {'data': result, 'count': count};
+          var data = {'data': result, 'count': user['count']};
           res.status(200).send(data);
         } else {
           Article.findOne(gte_filter, fields, function (error, result) {
             if (result) {
               Article.findOneAndUpdate({'_id': result['_id']}, {'$set': {'assigned': req.user.email}}).exec();
-              var data = {'data': result, 'count': count};
+              var data = {'data': result, 'count': user['count']};
               res.status(200).send(data);
             } else {
               var lte_filter = {'$and': [
                           {'rnd': {'$lte': rand}},
-                          {'tagged': false}
+                          {'assigned': ""}
                   ]};
               Article.findOne(lte_filter, fields, function (error, result) {
                 if (error) {return next(error);}
                   if (result) {
                     Article.findOneAndUpdate({'_id': result['_id']}, {'$set': {'assigned': req.user.email}}).exec();
-                    var data = {'data': result, 'count': count};
+                    var data = {'data': result, 'count': user['count']};
                     res.status(200).send(data);
                   } else {
-                    var data = {'data': {}, 'count': count};
+                    var data = {'data': result, 'count': user['count']};
                     res.status(200).send(data);
                   }
               });
