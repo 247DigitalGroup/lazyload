@@ -17,7 +17,7 @@ app.use(cors({origin:true, credentials:true}));
 app.use(express.static(path.join(__dirname, 'public/build')));
 
 // mongoose
-mongoose.connect('mongodb://localhost/lion_crawlers_test');
+mongoose.connect('mongodb://localhost/crawldb_test');
 
 // Session
 var session = require('express-session');
