@@ -9,15 +9,15 @@ var morgan  = require('morgan');
 
 // main config
 var app = express();
-app.set('port', process.env.PORT || 6969);
+app.set('port', process.argv[2] || 8080);
 app.use(morgan('tiny'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({origin:true, credentials:true}));
-app.use(express.static(path.join(__dirname, 'public/build')));
+app.use(express.static(path.join(__dirname, 'public/build/tagger')));
 
 // mongoose
-mongoose.connect('mongodb://localhost/lion_crawlers_test');
+mongoose.connect('mongodb://localhost/crawldb_test');
 
 // Session
 var session = require('express-session');

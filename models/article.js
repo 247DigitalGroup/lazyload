@@ -12,10 +12,10 @@ var Article = new Schema({
     tags: Array,
     notes: Array,
     low_quality: Boolean,
-    tagged: Boolean,
-    assigned: String
+    assigned: String,
+    tagged: Boolean
 });
 
 Article.plugin(mongoosePaginate);
-module.exports = mongoose.model('articles', Article);
+module.exports = mongoose.model('news_articles', Article);
 
