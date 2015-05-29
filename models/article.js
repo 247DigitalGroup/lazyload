@@ -9,11 +9,15 @@ var Article = new Schema({
     image_url: String,
     pubdate: Date,
     html: String,
-    tags: Array,
-    notes: Array,
-    low_quality: Boolean,
+    // tags: Array,
+    // notes: Array,
+    // low_quality: Boolean,
     assigned: String,
-    tagged: Boolean
+    // tagged: Boolean,
+    image_urls: Array,
+    image_tagged: Boolean,
+    note: String,
+    skipped: Boolean
 });
 
 Article.plugin(mongoosePaginate);

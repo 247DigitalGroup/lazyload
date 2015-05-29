@@ -11,8 +11,8 @@ var morgan  = require('morgan');
 var app = express();
 app.set('port', process.argv[2] || 8080);
 app.use(morgan('tiny'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: '5mb'}));
+app.use(bodyParser.urlencoded({limit: '5mb', extended: true }));
 app.use(cors({origin:true, credentials:true}));
 app.use(express.static(path.join(__dirname, 'public/build/tagger')));
 
