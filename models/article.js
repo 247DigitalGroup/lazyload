@@ -21,5 +21,5 @@ var Article = new Schema({
 });
 
 Article.plugin(mongoosePaginate);
-module.exports = mongoose.model('news_articles', Article);
+module.exports = mongoose.model('tagging_articles', Article);
 

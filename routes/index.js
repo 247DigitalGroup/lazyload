@@ -103,6 +103,7 @@ module.exports = function(passport){
     var html = req.body.html;
     var note = req.body.note || null;
     var skip = req.body.skip || false;
+    console.log(req.body)
     if (id && skip) {
       query = {
         '$set': {'skipped': true}
@@ -141,7 +142,6 @@ module.exports = function(passport){
           {'assigned': req.user.email},
           {'image_tagged': false},
           {'skipped': {'$exists': false}}
-          // {'url': 'http://okmagazine.com/photos/justin-timberlake-jessica-biel-first-photo-son-silas-randall-timberlake/photo/1001240559/'}
       ]};
     var fields = {_id: 1, url: 1};
     User.findOne({'email': req.user.email}, function(error, user) {
